@@ -1,16 +1,8 @@
 Regular **Markdown** here.
 
-<div hidden>
-```
-@startuml firstDiagram
 
-Alice -> Bob: Hello
-Bob -> Alice: Hi!
-		
-@enduml
-```
-</div>
 
-![](firstDiagram.svg)
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbnfreitas/drawing-idea-generator/master/test2diagrams.puml?token=AGAHTZ5IVDMWEZWJLZXJCUC76XO4G)
 
-Some more markdown.
+
+More text
