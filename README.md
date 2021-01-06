@@ -1,6 +1,9 @@
 # Assorted Example Diagrams
 Assorted examples of diagrams I've used in blog posts:
 
+![system overview](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/anoff/cbnfreitas/master/assets/overview.iuml)
+
+
 [<-Home](../../README.md)
 
 ## Contents
@@ -110,4 +113,6 @@ comp_1 .[#red]left.> user_app : failure\npropagation
 
 ## References
 
-* https://github.com/fuhrmanator/course-activity-planner/blob/master/ooad/overview.md
+* https://blog.anoff.io/2018-07-31-diagrams-with-plantuml/
+* https://github.com/mattjhayes/PlantUML-Examples
+* https://github.com/mattjhayes/PlantUML-Examples/blob/master/docs/Examples/README.md
