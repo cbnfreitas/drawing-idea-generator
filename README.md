@@ -37,6 +37,7 @@ im -[#black]down-> cp2
 @enduml
 ```
 
+![decoupling](decoupling.png)
 
 A continuum:
 
@@ -69,7 +70,7 @@ osi2 -right-> loose #black
 @enduml
 ```
 
-
+![platform_continuum](platform_continuum.png)
 
 A component diagram:
 
@@ -104,7 +105,9 @@ comp_1 .[#red]left.> user_app : failure\npropagation
 @enduml
 ```
 
+![tight_coupling_cascading_failure](tight_coupling_cascading_failure.png)
 
-## Reference
 
-https://github.com/fuhrmanator/course-activity-planner/blob/master/ooad/overview.md
+## References
+
+* https://github.com/fuhrmanator/course-activity-planner/blob/master/ooad/overview.md
