@@ -1,7 +1,7 @@
 # Assorted Example Diagrams
 Assorted examples of diagrams I've used in blog posts:
 
-![system overview](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/anoff/cbnfreitas/master/assets/overview.iuml)
+![system overview](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbnfreitas/drawing-idea-generator/master/assets/overview.iuml?token=AGAHTZ7KHWZ5YN3PVVXNUR276XEPW)
 
 
 [<-Home](../../README.md)
