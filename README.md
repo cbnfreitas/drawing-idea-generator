@@ -1,8 +1,6 @@
 Regular **Markdown** here.
 
 
+firstDiagram
 
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbnfreitas/drawing-idea-generator/master/test2diagrams.puml?token=AGAHTZ5IVDMWEZWJLZXJCUC76XO4G)
-
-
-More text
+![firstDiagram](https://www.plantuml.com/plantuml/svg/SoWkIImgAStDKKZBB2ekSSbCJ2zApENYSip9J4vLqBLJSCfFibBmICt9oUS2Ca4YO2cWMAOY5oUNGsfU2b0t0000 "firstDiagram")
