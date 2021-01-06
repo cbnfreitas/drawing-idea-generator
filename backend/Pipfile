@@ -1,0 +1,31 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+ipykernel = "*"
+autopep8 = "*"
+isort = "*"
+pytest = "*"
+pytest-cov = "*"
+
+[packages]
+requests = "*"
+bs4 = "*"
+fastapi = "*"
+uvicorn = "*"
+pydantic = {extras = ["email"],version = "*"}
+lxml = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+schedule = "*"
+python-jose = {extras = ["cryptography"],version = "*"}
+passlib = {extras = ["bcrypt"],version = "*"}
+jinja2 = "*"
+python-multipart = "*"
+fakeredis = "*"
+sendgrid = "*"
+
+[requires]
+python_version = "3.8"

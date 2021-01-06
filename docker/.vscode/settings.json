@@ -1,0 +1,14 @@
+{
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.tree.indent": 12,
+  "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "titleBar.activeBackground": "#484b45",
+      "statusBar.background": "#484b45"
+    }
+  },
+  "editor.formatOnSave": true,
+  "rest-client.previewResponsePanelTakeFocus": false,
+  "vtools.autoHideSideBar": true,
+  "vtools.autoHideDelay": 5000
+}

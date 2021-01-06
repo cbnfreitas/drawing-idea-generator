@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.dockerfile
+    ports:
+      - 8000:8000
+
+  frontend:
+    container_name: frontend
+    image: node:10.15.1
+    command: npm run dev
+    volumes:
+      - ../frontend:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0

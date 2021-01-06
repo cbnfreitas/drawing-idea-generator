@@ -1,0 +1,31 @@
+
+@baseurl = localhost:8000
+
+####
+POST /find_rank HTTP/1.1
+host: {{baseurl}}
+
+{
+  "terms": "criação de sites",
+  "url_to_find": "alphabrand",
+  "is_city": "true"
+}
+
+####
+POST /find_rank HTTP/1.1
+host: {{baseurl}}
+
+{
+  "terms": "blog de viagem",
+  "url_to_find": "viajenaviagem",
+  "is_city": "true"
+}
+
+####
+POST https://alphabrand-minitools-v1.herokuapp.com/find_rank HTTP/1.1
+
+{
+  "terms": "criação de sites sjc",
+  "url_to_find": "alphabrand.com.br",
+  "is_city": "false"
+}

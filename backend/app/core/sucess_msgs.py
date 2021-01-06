@@ -1,0 +1,5 @@
+LOGOUT_SUCCESSFULLY = "Logout successfully"
+PASSWORD_RECOVERY_SENT_TO_EMAIL = "Password recovery token sent to email"
+ACTIVATION_SENT_TO_EMAIL = "Activation token sent to email"
+PASSWORD_UPDATED_SUCCESSFULLY = "Password updated successfully"
+USER_ACTIVATED_SUCCESSFULLY = "User is activated successfully"

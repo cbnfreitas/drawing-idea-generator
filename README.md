@@ -1,6 +1,17 @@
-Regular **Markdown** here.
+# Drawing Idea Generator
 
 
-firstDiagram
+## Desenvolvimento
 
-![firstDiagram](https://www.plantuml.com/plantuml/svg/SoWkIImgAStDKKZBB2ekSSbCJ2zApENYSip9J4vLqBLJSCfFibBmICt9oUS2Ca4YO2cWMAOY5oUNGsfU2b0t0000 "firstDiagram")
+```plantuml
+@startgantt
+hide footbox
+[Prototype design] as [D] lasts 10 days
+[Test prototype] as [T] lasts 10 days
+[Test prototype II] as [S] lasts 10 days
+[T] starts at [D]'s end
+[S] starts at [T]'s end
+@endgantt
+```
+
+

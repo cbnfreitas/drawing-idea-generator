@@ -1,0 +1,29 @@
+{
+  "vetur.validation.template": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.formatOnSave": true,
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.tree.indent": 12,
+  "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "titleBar.activeBackground": "#df109a",
+      "statusBar.background": "#df109a"
+    }
+  }
+}

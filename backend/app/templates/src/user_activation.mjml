@@ -1,0 +1,21 @@
+<mjml>
+  <mj-body background-color="#fff">
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="20px" color="#5b6670">Olá {{ full_name }}!</mj-text>
+        <mj-text font-size="16px" color="#5b6670"
+          >&nbsp;&nbsp;Te damos as boas-vindas! Agora só falta um
+          clique:</mj-text
+        >
+        <mj-button
+          padding="50px 0px"
+          href="{{ link }}"
+          background-color="#5D1482"
+          >Ativar conta</mj-button
+        >
+        <mj-text font-size="14px" color="#5b6670">Atenciosamente,</mj-text>
+        <mj-text font-size="16px" color="#5b6670">Equipe da Alphabrand</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,0 +1,28 @@
+{
+  "python.languageServer": "Pylance",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.testing.pytestArgs": [
+    "app/tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.tree.indent": 12,
+  "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "titleBar.activeBackground": "#438815",
+      "statusBar.background": "#438815"
+    }
+  },
+  "editor.formatOnSave": true,
+  "rest-client.previewResponsePanelTakeFocus": false
+}

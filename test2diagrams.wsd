@@ -1,6 +1,0 @@
-@startuml firstDiagram
-
-Alice -> Bob: Hello
-Bob -> Alice: Hello back!
-	
-@enduml

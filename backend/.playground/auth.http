@@ -1,0 +1,72 @@
+@baseurl = 54.162.97.209:8000
+@baseurl = localhost:8000
+
+
+
+
+
+##################################################
+# SUPER USER LOGIN
+##################################################
+
+### Super User Login
+# @name response
+POST /auth/login HTTP/1.1
+host: {{baseurl}}
+content-type: application/x-www-form-urlencoded
+
+username=admin@admin.com
+&password=admin-pass
+
+
+####
+@access_token = {{response.response.body.access_token}}
+
+
+##################################################
+# USERS
+##################################################
+
+### Get all users
+GET /users/me HTTP/1.1
+host: {{baseurl}}
+authorization: Bearer {{access_token}}
+
+
+##################################################
+# LOGOUT
+##################################################
+
+### Get all users
+POST /auth/logout HTTP/1.1
+host: {{baseurl}}
+authorization: Bearer {{access_token}}
+
+
+
+### 
+POST /auth/password-reset-token-to-email/cbnfreitas@gmail.com  HTTP/1.1
+host: {{baseurl}}
+
+
+
+
+### Registration
+# @name response
+POST /auth/register HTTP/1.1
+host: {{baseurl}}
+
+{
+  "full_name": "Celso Freitas",
+  "email": "cbnfreitas@gmail.com",
+  "password": "senhalegal"
+}
+
+### Activate
+# @name response
+POST /auth/activation HTTP/1.1
+host: {{baseurl}}
+
+{
+  "activation_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNibmZyZWl0YXNAZ21haWwuY29tIiwidG9rZW5fdGltZXN0YW1wIjoxNjAxNzM0MjAyLjg2OTk0OCwiaXNfYWN0aXZlIjp0cnVlLCJleHAiOjE2MDE5MDcwMDIuODY5OTQ4fQ.8rumLy3J2s6hoORO6hAFYlVADj9052hYIQwFfSZEFE8"
+}

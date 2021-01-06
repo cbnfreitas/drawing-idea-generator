@@ -1,0 +1,49 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+
+.v-btn {
+  text-transform: none !important;
+  box-shadow: none;
+}
+
+.theme--light.v-application {
+  background-color: var(--v-background-base, white);
+}
+
+// span,
+// div {
+//   color: var(--v-textcolor-base, black);
+// }
+
+.theme--light.v-input {
+  color: var(--v-textcolor-base, black);
+}
+
+.theme--light.v-icon {
+  color: var(--v-textcolor-base, black);
+}
+
+.theme--light.v-input label {
+  color: var(--v-textcolor-base, black);
+}
+
+.theme--light.v-card {
+  color: var(--v-textcolor-base, black);
+}
+
+html {
+  color: var(--v-textcolor-base, black);
+  overflow-y: auto; /* Hide scroll if needed! :-) */
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
