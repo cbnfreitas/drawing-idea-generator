@@ -1,17 +1,59 @@
 # Drawing Idea Generator
 
+A simple web tool to show ideas for artists to draw randomly chosen from a set of features (who, what, where, how, etc.).
+> Example: A troll riding a bike on the Mars.
 
-## Desenvolvimento
+## Main requirements
+
+### Functional
+
+- Provide random ideas for drawing (features and values)
+- Admin can manage features and values
+- 
+
+### Non-Functional 
+
+- Simple to use
+- Visually attractive
+- 
+
+
+
+
+
+
+
+
+### As a anonymous user, I want to get a random drawing suggestion 
 
 ```plantuml
-@startgantt
-hide footbox
-[Prototype design] as [D] lasts 10 days
-[Test prototype] as [T] lasts 10 days
-[Test prototype II] as [S] lasts 10 days
-[T] starts at [D]'s end
-[S] starts at [T]'s end
-@endgantt
+@startuml
+!unquoted procedure SALT($x)
+"{{
+salt
+%invoke_procedure("_"+$x)
+}}" as $x
+!endprocedure
+
+!procedure _choose()
+{+
+"New Random suggestion"
+[Generate New Idea]
+}
+!endprocedure
+
+(*) --> SALT(choose)
+-left-> SALT(choose)
+@enduml
 ```
 
-
+asd
+```plantuml
+@startsalt
+{
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt
+```
