@@ -1,61 +1,20 @@
-
-According to https://www.youtube.com/watch?v=HP5kLLyLEKc
-
-> It's more important to get started than being right
-> Start with a design sprint!
+# Drawing idea generator
 
 ## VALUE PROPOSITION
 
-"PRODUCT NAME provides SERVICE to CUSTOMERS in ENVIRONMENT environment with TONE voice. Helping them feel IMPACT. X-Factor: XXX"
-
 "RED-ID provides DESIGN SPRINGS to STARTUPS & CORPORATE in a STRUCTURE environment with HIGHLY PROFESSIONAL voice. Helping them feel INNOVATIVE AND INFORMED. X-Factor: WE MAKE IDEAS SEE DAYLIGHT"
 
-Pain
-
-Main target audience (small number of users!)
-
-
-## BUDGET, TARGET TIME LINES
-
-Cost
-Market Opportunity
-Investor Directive
-
-Go to market budget 
-Maintanance and iteration
-
-
-Describe successfull time line 
-
-6 months
-
-## LIST OF FEATURES, USER JOURNEYS
-
-### User Journeys
-. Filtered Search: define search -> search results
-. Hotel info: basic info -> ... -> validation
-. Booking flow: hotel page -> order detals -> sign up -> payment gate -> approval
-
-### Tasks and groups
-
-
-## IDENTIFY MUST HAVE FEATURES
-
-Vote!
-Top quality: differentiation
-
-## IDENTIFY SHOULD HAVE FEATURES
-
-Develop it as fast as you can, no emphasis on top quality
-
-## IDENTIFY COULD HAVE FEATURES 
-
-## IDENTIFY WON'T HAVE FEATURES 
-
-If you don't have it, there's probably something wrong... 
-You shouldn't do it, even if you have time. Push your launch earlier instead!
-
-## IMPACT X EFFORT MATRIX
 
 
 
+
+
+## COMPETITOR ANALYSIS
+
+*What to Draw?* (12,036 user)
+https://play.google.com/store/apps/details?id=llamaze.com.br.whattodraw&hl=en_US&gl=US
+
+"What to Draw?" gives you ideas when you want to draw something, but have no idea of what.
+We offer 12 themes for you, Medieval Fantasy, Space, Horror, Western, Llama and so much more! All with millions of cool (and mostly weird) suggestions. No more artblocks!
+
+It has 2 types of suggestions. First are Random Phrases, a random formula that creates a suggestion based on key-words. Second is Pre-made Phrases, suggestions from What to draw?'s database. Now get to drawing!
