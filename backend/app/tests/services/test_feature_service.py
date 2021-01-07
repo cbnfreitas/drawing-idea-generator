@@ -1,19 +1,17 @@
-# from typing import Any
+from typing import Any
 
-# from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 
-# from ...schemas.rank_schema import RankRequestSchema
-# from ...services import rank_service
-# from ..utils import random_integer
-# from ..utils.rank_utils import (assert_schema_db_rank,
-#                                 create_random_rank_schema,
-#                                 create_random_rank_with_service)
+from ...schemas.feature_schema import FeatureCreateSchema
+from ...services import feature_service
+from ..utils import random_integer, random_lower_string
 
 
-# def test_create_rank_service(db: Session) -> None:
-#     random_rank_schema = create_random_rank_schema()
-#     created_rank_db = rank_service.create(db, obj_in=random_rank_schema)
-#     assert_schema_db_rank(random_rank_schema, created_rank_db)
+def test_create_feature_service(db: Session) -> None:
+    random_feature_data = random_lower_string()
+    random_feature = FeatureCreateSchema(random_feature_data)
+    created_rank_db = feature_service.create(db, obj_in=random_feature)
+    assert created_rank_db == random_feature_data
 
 
 # def test_read_rank_service(db: Session) -> None:

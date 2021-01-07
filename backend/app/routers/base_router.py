@@ -11,25 +11,19 @@ from ..core.depends import (get_admin_from_access_token, get_db,
 from ..schemas.msg_schema import MsgResponseSchema
 from ..services import BaseService
 
-APIRouterType = TypeVar("APIRouterType", bound=APIRouter)
-BaseServiceType = TypeVar("BaseServiceType", bound=BaseService)
-BaseServiceByOwnerType = TypeVar(
-    "BaseServiceByOwnerType")
-
 
 def build_simple_crud(
-    router: APIRouterType,
-    entity_name: str,
+    router: APIRouter,
+    uri: str,
     entity_name_plural: str,
-    base_service: Any,  # TODO
+    entity_name: str,
+    base_service: BaseService,
     request_schema_type: Any,  # TODO
     response_schema_type: Any,  # TODO
     options: Dict[str, Any] = {},
     # admin_only: bool = False
 ):
-
     entity_id_name = f"{entity_name}_id"
-    uri = f"/{entity_name_plural}"
 
     if not 'create' in options or options['create'] == True:
         @router.post(uri,
@@ -57,11 +51,11 @@ def build_simple_crud(
         def read_many(
                 db: Session = Depends(get_db),
                 *,
-                skip: int = 0,
-                limit: int = 100
+                skip: int = None,
+                limit: int = None
         ) -> Any:
             """
-            Retrieve many entities including pagination.
+            Retrieve many entities. It includes pagination if skip and limit are provided.
             """
             entities = base_service.read_many(db, skip=skip, limit=limit)
             return entities

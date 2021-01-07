@@ -1,5 +1,6 @@
 from ..models import FeaturesModel
+from ..schemas.feature_schema import FeatureCreateSchema
 from .base_service import BaseService
 
-rank_service = BaseService[FeaturesModel,
-                           RankRequestSchema, RankRequestSchema](FeaturesModel, FeaturesModel.id)
+feature_service = BaseService[FeaturesModel,
+                              FeatureCreateSchema, FeatureCreateSchema](FeaturesModel, FeaturesModel.id)

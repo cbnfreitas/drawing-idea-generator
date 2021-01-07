@@ -30,44 +30,44 @@ from ..services import denied_token_redis, user_service
 router = APIRouter()
 
 
-@router.post(f"{route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL}",
-             response_model=MsgResponseSchema)
-def registration(
-        db: Session = Depends(depends.get_db),
-        *,
-        new_user_in: UserCreateSchema
-) -> Any:
-    """
-    Register a new normal user as inactive and send activation token to his/her e-mail.
-    """
-    user_with_this_email = user_service.read_by_email(
-        db, email=new_user_in.email)
+# @router.post(f"{route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL}",
+#              response_model=MsgResponseSchema)
+# def registration(
+#         db: Session = Depends(depends.get_db),
+#         *,
+#         new_user_in: UserCreateSchema
+# ) -> Any:
+#     """
+#     Register a new normal user as inactive and send activation token to his/her e-mail.
+#     """
+#     user_with_this_email = user_service.read_by_email(
+#         db, email=new_user_in.email)
 
-    if user_with_this_email:
-        raise HTTPException(
-            status_code=HTTPStatus.BAD_REQUEST,
-            detail=error_msgs.EMAIL_ALREADY_IN_USE)
+#     if user_with_this_email:
+#         raise HTTPException(
+#             status_code=HTTPStatus.BAD_REQUEST,
+#             detail=error_msgs.EMAIL_ALREADY_IN_USE)
 
-    new_user = user_service.create(db, obj_in=new_user_in)
-    activation_token = create_user_activation_token(email=new_user.email)
-    send_activation_email(user=new_user, token=activation_token)
+#     new_user = user_service.create(db, obj_in=new_user_in)
+#     activation_token = create_user_activation_token(email=new_user.email)
+#     send_activation_email(user=new_user, token=activation_token)
 
-    return MsgResponseSchema(detail=sucess_msgs.ACTIVATION_SENT_TO_EMAIL)
+#     return MsgResponseSchema(detail=sucess_msgs.ACTIVATION_SENT_TO_EMAIL)
 
 
-@router.post(route_paths.ROUTE_AUTH_ACTIVATION, response_model=MsgResponseSchema)
-def activation(
-        user_db_activation: UserModel = Depends(
-            depends.get_user_db_from_activation_token),
-        db: Session = Depends(depends.get_db),
-) -> Any:
-    """
-    After receiving an activation token from e-mail, activates the user.
-    """
+# @router.post(route_paths.ROUTE_AUTH_ACTIVATION, response_model=MsgResponseSchema)
+# def activation(
+#         user_db_activation: UserModel = Depends(
+#             depends.get_user_db_from_activation_token),
+#         db: Session = Depends(depends.get_db),
+# ) -> Any:
+#     """
+#     After receiving an activation token from e-mail, activates the user.
+#     """
 
-    user_service.update(db, id=user_db_activation.id,
-                        obj_in={UserModel.is_active: True})
-    return MsgResponseSchema(detail=sucess_msgs.USER_ACTIVATED_SUCCESSFULLY)
+#     user_service.update(db, id=user_db_activation.id,
+#                         obj_in={UserModel.is_active: True})
+#     return MsgResponseSchema(detail=sucess_msgs.USER_ACTIVATED_SUCCESSFULLY)
 
 
 @router.post(route_paths.ROUTE_AUTH_LOGIN, response_model=LoginResponseSchema)

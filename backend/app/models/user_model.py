@@ -13,3 +13,5 @@ class UserModel(BaseModel):
     hashed_password = Column(String, nullable=False)
     last_auth_change = Column(
         DateTime, default=datetime.datetime.utcnow)
+    is_admin = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=False)

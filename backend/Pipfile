@@ -26,6 +26,7 @@ jinja2 = "*"
 python-multipart = "*"
 fakeredis = "*"
 sendgrid = "*"
+pydantic-sqlalchemy = "*"
 
 [requires]
 python_version = "3.9"

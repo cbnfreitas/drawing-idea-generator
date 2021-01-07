@@ -3,6 +3,14 @@
 A simple web tool to show ideas for artists to draw randomly chosen from a set of features (who, what, where, how, etc.).
 > Example: A troll riding a bike on the Mars.
 
+
+## Stack
+
+* Python, FastApi
+* PostgreSQL
+* VueJs, Vuetify
+* AWZ
+
 ## Main requirements
 
 ### Functional

@@ -8,5 +8,5 @@ from .base_model import BaseModel
 
 class ValuesModel(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
-    property_id = Column(Integer, ForeignKey('feature.id'))
+    # property_id = Column(Integer, ForeignKey('feature.id'))
     name = Column(String, index=True)

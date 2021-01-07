@@ -1,26 +1,18 @@
 from typing import Any, List, Optional
 
 from pydantic import BaseModel as BaseSchema
+from pydantic_sqlalchemy import sqlalchemy_to_pydantic
 
+from ..models import FeaturesModel
 from .autocomplete import autocomplete
-from .keyword_schema import KeywordResponseNestedSchema
 
 
 @autocomplete
-class _DomainCommon(BaseSchema):
-    url: str
+class FeatureCreateSchema(BaseSchema):
+    name: str
 
 
 @autocomplete
-class DomainRequestSchema(_DomainCommon):
-    class Config:
-        extra = 'forbid'
-
-
-@autocomplete
-class DomainResponseSchema(_DomainCommon):
+class FeatureReadSchema(BaseSchema):
     id: int
-    keywords: List[KeywordResponseNestedSchema]
-
-    class Config:
-        orm_mode = True
+    name: str
