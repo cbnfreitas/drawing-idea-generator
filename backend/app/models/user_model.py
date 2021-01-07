@@ -13,10 +13,3 @@ class UserModel(BaseModel):
     hashed_password = Column(String, nullable=False)
     last_auth_change = Column(
         DateTime, default=datetime.datetime.utcnow)
-    is_active = Column(Boolean, default=False)
-    is_admin = Column(Boolean, default=False)
-
-    # domains = relationship(
-    #     "DomainModel", cascade="all, delete, delete-orphan")
-    # keywords = relationship(
-    #     "KeywordModel", cascade="all, delete, delete-orphan")

@@ -19,10 +19,11 @@
   "workbench.tree.indent": 12,
   "workbench.colorCustomizations": {
     "[Default Dark+]": {
-      "titleBar.activeBackground": "#438815",
-      "statusBar.background": "#438815"
+      "titleBar.activeBackground": "#7a6c18",
+      "statusBar.background": "#7a6c18"
     }
   },
   "editor.formatOnSave": true,
-  "rest-client.previewResponsePanelTakeFocus": false
+  "rest-client.previewResponsePanelTakeFocus": false,
+  "window.title": "${activeEditorShort}${separator}${rootName}${separator}DRAWING"
 }
