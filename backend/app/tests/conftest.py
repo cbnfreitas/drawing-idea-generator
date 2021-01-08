@@ -9,8 +9,6 @@ from ..core.session import SessionLocal
 from ..main import app
 from .utils import random_email
 
-# from .utils.auth_utils import get_access_token_from_email
-
 s.SEND_GRID_API_KEY = ""
 
 

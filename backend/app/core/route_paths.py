@@ -17,3 +17,4 @@ ROUTE_USERS_ME = "/users/me"
 ROUTE_IDEAS = "/ideas"
 
 ROUTE_FEATURES = "/features"
+ROUTE_DUMMIES = "/dummies"

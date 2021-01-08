@@ -27,7 +27,7 @@
 		8000
 	],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install pipenv & pipenv install --dev & alias run='bash run.sh' & alias test='bash test.sh'",
+	"postCreateCommand": "pip install pipenv & pipenv install --dev",
 	// Comment out to connect as root instead.
 	"remoteUser": "vscode"
 }

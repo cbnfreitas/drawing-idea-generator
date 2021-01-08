@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 from sqlalchemy.orm import Session
 
-from ...models.features_model import FeatureModel
+from ...models import FeatureModel
 from ...schemas.feature_schema import FeatureCreateSchema
 from ...services import feature_service
 from ...tests.utils import random_integer, random_lower_string
