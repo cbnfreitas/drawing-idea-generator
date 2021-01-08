@@ -2,17 +2,13 @@ from typing import Dict
 
 from fastapi import status
 from fastapi.testclient import TestClient
-from sqlalchemy.inspection import inspect
-from sqlalchemy.orm import Session, class_mapper
+from sqlalchemy.orm import Session
 
 from ...core import route_paths
-from ...services.user_service import user_service
-from ..utils import (is_dict_in_dict, is_dict_in_response,
-                     is_error_code_response, is_success_code_response,
-                     model_to_dict, random_email, random_lower_string)
+from ..utils import (is_dict_in_response, is_success_code_response,
+                     model_to_dict)
 from ..utils.feature_utils import (create_random_feature_dict,
                                    create_random_feature_with_service)
-from ..utils.user_utils import create_or_update_user_via_service
 
 
 def test_create_feature_router(
