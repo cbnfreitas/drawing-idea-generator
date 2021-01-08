@@ -47,6 +47,11 @@ def build_simple_crud(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     detail=f"?")
 
+            if not entity:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"No {entity_name} with {entity_id_name}={id}.")
+
             return entity
 
     # if not 'read_many' in options or options['read_many'] == True:
@@ -73,29 +78,29 @@ def build_simple_crud(
 
     #         return entities
 
-    # if not 'read_one' in options or options['read_one'] == True:
-    #     @router.get(f"{uri}/{{{entity_id_name}}}",
-    #                 summary=f"Read a single {entity_name}",
-    #                 response_model=response_schema_type,
-    #                 responses={status.HTTP_404_NOT_FOUND: {
-    #                     "model": MsgResponseSchema}}
-    #                 )
-    #     def read_one(
-    #             db: Session = Depends(get_db),
-    #             *,
-    #             id: int = Path(..., alias=entity_id_name)
-    #     ) -> Any:
-    #         """
-    #         Get an entity.
-    #         """
-    #         try:
-    #             entity = base_service.read(db, id=id)
-    #         except Exception as e:
-    #             raise HTTPException(
-    #                 status_code=status.HTTP_404_NOT_FOUND,
-    #                 detail=f"No {entity_name} with {entity_id_name}={id}.")
+    if not 'read_one' in options or options['read_one'] == True:
+        @router.get(f"{uri}/{{{entity_id_name}}}",
+                    summary=f"Read a single {entity_name}",
+                    response_model=response_schema_type,
+                    responses={status.HTTP_404_NOT_FOUND: {
+                        "model": MsgResponseSchema}}
+                    )
+        def read_one(
+                db: Session = Depends(get_db),
+                *,
+                id: int = Path(..., alias=entity_id_name)
+        ) -> Any:
+            """
+            Get an entity.
+            """
+            try:
+                entity = base_service.read(db, id=id)
+            except Exception as e:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"No {entity_name} with {entity_id_name}={id}.")
 
-    #         return entity
+            return entity
 
     # if not 'update' in options or options['update'] == True:
     #     @router.put(f"{uri}/{{{entity_id_name}}}",

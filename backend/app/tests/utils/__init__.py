@@ -5,12 +5,16 @@ from datetime import date, datetime
 from sqlalchemy.sql.sqltypes import DateTime
 
 
+def is_dict_in_dict(dict_a, dict_b):
+    return dict_a.items() <= dict_b.items()
+
+
 def is_schema_in_model(schema, model):
-    return schema.dict().items() <= model_to_dict(model).items()
+    return is_dict_in_dict(schema.dict(), model_to_dict(model))
 
 
 def is_dict_in_response(dict, response):
-    return dict.items() <= response.json().items()
+    return is_dict_in_dict(dict, response.json())
 
 
 def model_to_dict(obj):

@@ -6,10 +6,11 @@ from sqlalchemy.orm import Session, class_mapper
 
 from ...core import route_paths
 from ...services.user_service import user_service
-from ..utils import (is_dict_in_response, is_error_code_response,
-                     is_success_code_response, model_to_dict, random_email,
-                     random_lower_string)
-from ..utils.feature_utils import create_random_feature_dict
+from ..utils import (is_dict_in_dict, is_dict_in_response,
+                     is_error_code_response, is_success_code_response,
+                     model_to_dict, random_email, random_lower_string)
+from ..utils.feature_utils import (create_random_feature_dict,
+                                   create_random_feature_with_service)
 from ..utils.user_utils import create_or_update_user_via_service
 
 
@@ -19,20 +20,22 @@ def test_create_feature_router(
     random_feature_dict = create_random_feature_dict()
     created_feature_router_response = client.post(
         route_paths.ROUTE_FEATURES, json=random_feature_dict)
+
     assert is_success_code_response(created_feature_router_response)
     assert is_dict_in_response(
         random_feature_dict, created_feature_router_response)
 
 
-# def test_read_rank_router(
-#         client: TestClient, db: Session
-# ) -> None:
-#     random_rank_db = create_random_rank_with_service(db)
-#     rank_id = random_rank_db.id
-#     read_rank_router_dict = assert_success_and_get_dict(client.get(
-#         f"{route_paths.ROUTE_RANKS}/{rank_id}"))
-#     random_rank_db_dict = model_to_dict(random_rank_db)
-#     assert random_rank_db_dict == read_rank_router_dict
+def test_read_feature_router(
+        client: TestClient, db: Session
+) -> None:
+    random_feature_model = create_random_feature_with_service(db)
+    feature_id = random_feature_model.id
+    read_feature_router_response = client.get(
+        f"{route_paths.ROUTE_FEATURES}/{feature_id}")
+
+    assert is_success_code_response(read_feature_router_response)
+    assert read_feature_router_response.json() == model_to_dict(random_feature_model)
 
 
 # def test_read_many_rank_router(
