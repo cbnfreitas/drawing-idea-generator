@@ -10,6 +10,10 @@ def assert_success_and_get_dict(response):
     return response.json()
 
 
+def is_schema_in_model(schema, model):
+    return schema.dict().items() <= model_to_dict(model).items()
+
+
 def model_to_dict(obj):
     d = {}
     for column in obj.__table__.columns:

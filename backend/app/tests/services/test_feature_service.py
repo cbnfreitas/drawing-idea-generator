@@ -1,40 +1,49 @@
 from typing import Any
 
+from app.tests.utils.feature_utils import (create_random_feature_schema,
+                                           create_random_feature_with_service)
 from sqlalchemy.orm import Session
 
-from ...schemas.feature_schema import FeatureCreateSchema
 from ...services import feature_service
-from ..utils import random_integer, random_lower_string
+from ..utils import (is_schema_in_model, model_to_dict, random_integer,
+                     random_lower_string)
 
 
 def test_create_feature_service(db: Session) -> None:
-    random_feature_data = random_lower_string()
-    random_feature = FeatureCreateSchema(random_feature_data)
-    created_rank_db = feature_service.create(db, obj_in=random_feature)
-    assert created_rank_db == random_feature_data
+    random_feature_schema = create_random_feature_schema()
+    created_feature_model = feature_service.create(
+        db, obj_in=random_feature_schema)
+
+    assert is_schema_in_model(random_feature_schema, created_feature_model)
 
 
-# def test_read_rank_service(db: Session) -> None:
-#     created_rank_db = create_random_rank_with_service(db)
-#     read_rank_db = rank_service.read(db, id=created_rank_db.id)
-#     assert created_rank_db == read_rank_db
+def test_read_feature_service(db: Session) -> None:
+    created_feature_model = create_random_feature_with_service(db)
+    read_feature_model = feature_service.read(db, id=created_feature_model.id)
+
+    assert created_feature_model == read_feature_model
 
 
-# def test_read_many_rank_service(db: Session) -> None:
-#     created_rank_db = create_random_rank_with_service(db)
-#     read_list_rank_db = rank_service.read_many(db)
-#     assert created_rank_db in read_list_rank_db
+def test_read_many_feature_service(db: Session) -> None:
+    created_feature_model = create_random_feature_with_service(db)
+    read_feature_model_list = feature_service.read_many(db)
+
+    assert created_feature_model in read_feature_model_list
 
 
-# def test_update_rank_service(db: Session) -> None:
-#     created_rank_db = create_random_rank_with_service(db)
-#     new_random_rank_schema = create_random_rank_schema()
-#     updated_rank_db = rank_service.update(
-#         db, id=created_rank_db.id, obj_in=new_random_rank_schema)
+def test_update_feature_service(db: Session) -> None:
+    created_feature_model = create_random_feature_with_service(db)
+    new_random_feature_schema = create_random_feature_schema()
 
-#     assert_schema_db_rank(new_random_rank_schema, updated_rank_db)
+    updated_feature_model = feature_service.update(
+        db, id=created_feature_model.id, obj_in=new_random_feature_schema)
+
+    assert is_schema_in_model(new_random_feature_schema, updated_feature_model)
 
 
-# def test_delete_rank_service(db: Session) -> None:
-#     created_rank_db = create_random_rank_with_service(db)
-#     rank_service.delete(db, id=created_rank_db.id)
+def test_delete_feature_service(db: Session) -> None:
+    created_feature_model = create_random_feature_with_service(db)
+    feature_service.delete(db, id=created_feature_model.id)
+
+    read_feature_model = feature_service.read(db, id=created_feature_model.id)
+    assert not read_feature_model

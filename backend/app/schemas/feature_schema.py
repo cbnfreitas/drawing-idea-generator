@@ -2,7 +2,7 @@ from typing import Any, List, Optional
 
 from pydantic import BaseModel as BaseSchema
 
-from ..models import FeaturesModel
+from ..models import FeatureModel
 from .autocomplete import autocomplete
 
 # from pydantic_sqlalchemy import sqlalchemy_to_pydantic
