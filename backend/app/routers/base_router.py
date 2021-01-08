@@ -12,7 +12,7 @@ from ..schemas.msg_schema import MsgResponseSchema
 from ..services import BaseService
 
 
-def build_simple_crud(
+def base_router(
     router: APIRouter,
     uri: str,
     entity_name_plural: str,
