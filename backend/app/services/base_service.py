@@ -78,7 +78,7 @@ class _BaseService(Generic[BaseModelType]):
         Delete a `ModelType` by `id` on the database.
         """
         db_obj = db.query(self.model).filter(conditions)
-        if not db_obj:
+        if db_obj.count() == 0:
             return False
 
         db_obj.delete()

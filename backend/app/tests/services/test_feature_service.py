@@ -47,3 +47,8 @@ def test_delete_feature_service(db: Session) -> None:
 
     read_feature_model = feature_service.read(db, id=created_feature_model.id)
     assert not read_feature_model
+
+
+def test_fail_to_delete_feature_service_with_non_existing_id(db: Session) -> None:
+    wrong_feature_model_id = -1
+    assert not feature_service.delete(db, id=wrong_feature_model_id)
