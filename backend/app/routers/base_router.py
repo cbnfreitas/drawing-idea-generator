@@ -21,9 +21,11 @@ def build_simple_crud(
     request_schema_type: Any,  # TODO
     response_schema_type: Any,  # TODO
     options: Dict[str, Any] = {},
-    # admin_only: bool = False
+    # admin_only: bool = True
 ):
     entity_id_name = f"{entity_name}_id"
+    # args = Depends(
+    #     get_admin_from_access_token) if admin_only else pass
 
     if not 'create' in options or options['create'] == True:
         @router.post(uri,
@@ -32,101 +34,119 @@ def build_simple_crud(
                      )
         def create(
                 db: Session = Depends(get_db),
-                # admin_token_data: Dict[str, Any] = Depends(
-                #     get_admin_from_access_token) if admin_only else None,  # type: ignore
+                admin_token_data: Dict[str, Any] = Depends(
+                    get_admin_from_access_token),
                 *,
                 obj_in: request_schema_type,
         ) -> Any:
             """
             Create an entity.
             """
-            entity = base_service.create(db, obj_in=obj_in)
+            try:
+                entity = base_service.create(db, obj_in=obj_in)
+            except Exception as e:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"?")
+
             return entity
 
-    if not 'read_many' in options or options['read_many'] == True:
-        @router.get(uri,
-                    summary=f"Read many {entity_name_plural}",
-                    response_model=List[response_schema_type]
-                    )
-        def read_many(
-                db: Session = Depends(get_db),
-                *,
-                skip: int = None,
-                limit: int = None
-        ) -> Any:
-            """
-            Retrieve many entities. It includes pagination if skip and limit are provided.
-            """
-            entities = base_service.read_many(db, skip=skip, limit=limit)
-            return entities
+    # if not 'read_many' in options or options['read_many'] == True:
+    #     @router.get(uri,
+    #                 summary=f"Read many {entity_name_plural}",
+    #                 response_model=List[response_schema_type]
+    #                 )
+    #     def read_many(
+    #             db: Session = Depends(get_db),
+    #             *,
+    #             skip: int = None,
+    #             limit: int = None
+    #     ) -> Any:
+    #         """
+    #         Retrieve many entities. It includes pagination if skip and limit are provided.
+    #         """
 
-    if not 'read_one' in options or options['read_one'] == True:
-        @router.get(f"{uri}/{{{entity_id_name}}}",
-                    summary=f"Read a single {entity_name}",
-                    response_model=response_schema_type,
-                    responses={status.HTTP_404_NOT_FOUND: {
-                        "model": MsgResponseSchema}}
-                    )
-        def read_one(
-                db: Session = Depends(get_db),
-                *,
-                id: int = Path(..., alias=entity_id_name)
-        ) -> Any:
-            """
-            Get an entity.
-            """
-            entity = base_service.read(db, id=id)
-            if not entity:
-                raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail=f"No {entity_name} with {entity_id_name}={id}.")
-            return entity
+    #         try:
+    #             entities = base_service.read_many(db, skip=skip, limit=limit)
+    #         except Exception as e:
+    #             raise HTTPException(
+    #                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #                 detail=f"?")
 
-    if not 'update' in options or options['update'] == True:
-        @router.put(f"{uri}/{{{entity_id_name}}}",
-                    summary=f"Update a single {entity_name}",
-                    response_model=response_schema_type,
-                    responses={status.HTTP_404_NOT_FOUND: {
-                        "model": MsgResponseSchema}}
-                    )
-        def update(
-                db: Session = Depends(get_db),
-                *,
-                id: int = Path(..., alias=entity_id_name),
-                obj_in: request_schema_type
-        ) -> Any:
-            """
-            Update an entity.
-            """
-            entity = base_service.update(db, id=id, obj_in=obj_in)
-            if not entity:
-                raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail=f"No {entity_name} with {entity_id_name}={id}.")
-            return entity
+    #         return entities
 
-    if not 'delete' in options or options['delete'] == True:
-        @router.delete(f"{uri}/{{{entity_id_name}}}",
-                       summary=f"Delete a single {entity_name}",
-                       status_code=status.HTTP_204_NO_CONTENT,
-                       responses={status.HTTP_404_NOT_FOUND: {
-                           "model": MsgResponseSchema}}
-                       )
-        def delete(
-                db: Session = Depends(get_db),
-                *,
-                id: int = Path(..., alias=entity_id_name),
-        ) -> Any:
-            """
-            Delete an entity.
-            """
-            entity = base_service.delete(db, id=id)
-            if not entity:
-                raise HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail=f"No {entity_name} with {entity_id_name}={id}.")
+    # if not 'read_one' in options or options['read_one'] == True:
+    #     @router.get(f"{uri}/{{{entity_id_name}}}",
+    #                 summary=f"Read a single {entity_name}",
+    #                 response_model=response_schema_type,
+    #                 responses={status.HTTP_404_NOT_FOUND: {
+    #                     "model": MsgResponseSchema}}
+    #                 )
+    #     def read_one(
+    #             db: Session = Depends(get_db),
+    #             *,
+    #             id: int = Path(..., alias=entity_id_name)
+    #     ) -> Any:
+    #         """
+    #         Get an entity.
+    #         """
+    #         try:
+    #             entity = base_service.read(db, id=id)
+    #         except Exception as e:
+    #             raise HTTPException(
+    #                 status_code=status.HTTP_404_NOT_FOUND,
+    #                 detail=f"No {entity_name} with {entity_id_name}={id}.")
 
-            return JSONResponse()
+    #         return entity
+
+    # if not 'update' in options or options['update'] == True:
+    #     @router.put(f"{uri}/{{{entity_id_name}}}",
+    #                 summary=f"Update a single {entity_name}",
+    #                 response_model=response_schema_type,
+    #                 responses={status.HTTP_404_NOT_FOUND: {
+    #                     "model": MsgResponseSchema}}
+    #                 )
+    #     def update(
+    #             db: Session = Depends(get_db),
+    #             *,
+    #             id: int = Path(..., alias=entity_id_name),
+    #             obj_in: request_schema_type
+    #     ) -> Any:
+    #         """
+    #         Update an entity.
+    #         """
+    #         try:
+    #             entity = base_service.update(db, id=id, obj_in=obj_in)
+    #         except Exception as e:
+    #             raise HTTPException(
+    #                 status_code=status.HTTP_404_NOT_FOUND,
+    #                 detail=f"No {entity_name} with {entity_id_name}={id}.")
+
+    #         return entity
+
+    # if not 'delete' in options or options['delete'] == True:
+    #     @router.delete(f"{uri}/{{{entity_id_name}}}",
+    #                    summary=f"Delete a single {entity_name}",
+    #                    status_code=status.HTTP_204_NO_CONTENT,
+    #                    responses={status.HTTP_404_NOT_FOUND: {
+    #                        "model": MsgResponseSchema}}
+    #                    )
+    #     def delete(
+    #             db: Session = Depends(get_db),
+    #             *,
+    #             id: int = Path(..., alias=entity_id_name),
+    #     ) -> Any:
+    #         """
+    #         Delete an entity.
+    #         """
+    #         try:
+    #             base_service.delete(db, id=id)
+    #         except Exception as e:
+    #             raise HTTPException(
+    #                 status_code=status.HTTP_404_NOT_FOUND,
+    #                 detail=f"No {entity_name} with {entity_id_name}={id}.")
+    #             # e.args[0]
+    #         return JSONResponse()
 
     return
 

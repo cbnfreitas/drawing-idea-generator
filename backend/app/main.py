@@ -1,4 +1,4 @@
-import asyncio
+# import asyncio
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core import s
 from .core.baseline import baseline
 from .core.session import SessionLocal
-# from .jobs.rank_job import rank_job
 from .routers import api_router
 
 db = SessionLocal()
