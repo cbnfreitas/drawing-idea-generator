@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from ...core import error_msgs, route_paths
 from ...core.security import create_password_reset_token, decode_sub_jwt
 from ...services.user_service import user_service
-from ..utils import (is_error_code_response, is_success_code_response, random_email,
-                     random_lower_string)
+from ..utils import (is_error_code_response, is_success_code_response,
+                     random_email, random_lower_string)
 from ..utils.auth_utils import (get_access_token_from_email,
                                 user_auth_refresh_from_security)
 from ..utils.user_utils import create_or_update_user_via_service

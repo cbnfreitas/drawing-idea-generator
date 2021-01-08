@@ -119,7 +119,7 @@ def build_simple_crud(
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail=f"No {entity_name} with {entity_id_name}={id}.")
-                # e.args[0]
+
             return JSONResponse()
 
     return
