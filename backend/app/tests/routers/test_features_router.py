@@ -26,7 +26,7 @@ def test_create_feature_router(
         random_feature_dict, created_feature_router_response)
 
 
-def test_read_feature_router(
+def test_read_one_feature_router(
         client: TestClient, db: Session
 ) -> None:
     random_feature_model = create_random_feature_with_service(db)
@@ -35,17 +35,19 @@ def test_read_feature_router(
         f"{route_paths.ROUTE_FEATURES}/{feature_id}")
 
     assert is_success_code_response(read_feature_router_response)
-    assert read_feature_router_response.json() == model_to_dict(random_feature_model)
+    assert (model_to_dict(random_feature_model) ==
+            read_feature_router_response.json())
 
 
-# def test_read_many_rank_router(
-#         client: TestClient, db: Session
-# ) -> None:
-#     random_rank_db = create_random_rank_with_service(db)
-#     read_rank_router_dict = assert_success_and_get_dict(client.get(
-#         route_paths.ROUTE_RANKS))
-#     random_rank_db_dict = model_to_dict(random_rank_db)
-#     assert random_rank_db_dict in read_rank_router_dict
+def test_read_many_features_router(
+        client: TestClient, db: Session
+) -> None:
+    random_feature_model = create_random_feature_with_service(db)
+    read_feature_list_router_response = client.get(route_paths.ROUTE_FEATURES)
+
+    assert is_success_code_response(read_feature_list_router_response)
+    assert (model_to_dict(random_feature_model)
+            in read_feature_list_router_response.json())
 
 
 # def test_update_user(

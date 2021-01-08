@@ -54,30 +54,6 @@ def build_simple_crud(
 
             return entity
 
-    # if not 'read_many' in options or options['read_many'] == True:
-    #     @router.get(uri,
-    #                 summary=f"Read many {entity_name_plural}",
-    #                 response_model=List[response_schema_type]
-    #                 )
-    #     def read_many(
-    #             db: Session = Depends(get_db),
-    #             *,
-    #             skip: int = None,
-    #             limit: int = None
-    #     ) -> Any:
-    #         """
-    #         Retrieve many entities. It includes pagination if skip and limit are provided.
-    #         """
-
-    #         try:
-    #             entities = base_service.read_many(db, skip=skip, limit=limit)
-    #         except Exception as e:
-    #             raise HTTPException(
-    #                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #                 detail=f"?")
-
-    #         return entities
-
     if not 'read_one' in options or options['read_one'] == True:
         @router.get(f"{uri}/{{{entity_id_name}}}",
                     summary=f"Read a single {entity_name}",
@@ -101,6 +77,30 @@ def build_simple_crud(
                     detail=f"No {entity_name} with {entity_id_name}={id}.")
 
             return entity
+
+    if not 'read_many' in options or options['read_many'] == True:
+        @router.get(uri,
+                    summary=f"Read many {entity_name_plural}",
+                    response_model=List[response_schema_type]
+                    )
+        def read_many(
+                db: Session = Depends(get_db),
+                *,
+                skip: int = None,
+                limit: int = None
+        ) -> Any:
+            """
+            Retrieve many entities. It includes pagination if skip and limit are provided.
+            """
+
+            try:
+                entities = base_service.read_many(db, skip=skip, limit=limit)
+            except Exception as e:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"?")
+
+            return entities
 
     # if not 'update' in options or options['update'] == True:
     #     @router.put(f"{uri}/{{{entity_id_name}}}",
