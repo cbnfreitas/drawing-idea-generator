@@ -34,8 +34,6 @@ def build_simple_crud(
                      )
         def create(
                 db: Session = Depends(get_db),
-                admin_token_data: Dict[str, Any] = Depends(
-                    get_admin_from_access_token),
                 *,
                 obj_in: request_schema_type,
         ) -> Any:

@@ -14,17 +14,6 @@
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/local/bin/python",
-		// "python.linting.enabled": true,
-		// "python.linting.pylintEnabled": true,
-		// "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-		// "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-		// "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-		// "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-		// "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-		// "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-		// "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-		// "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-		// "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
@@ -38,7 +27,7 @@
 		8000
 	],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install pipenv & pipenv install --dev",
+	"postCreateCommand": "pip install pipenv & pipenv install --dev & alias run='bash run.sh' & alias test='bash test.sh'",
 	// Comment out to connect as root instead.
 	"remoteUser": "vscode"
 }

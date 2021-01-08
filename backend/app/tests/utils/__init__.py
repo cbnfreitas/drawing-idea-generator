@@ -5,13 +5,12 @@ from datetime import date, datetime
 from sqlalchemy.sql.sqltypes import DateTime
 
 
-def assert_success_and_get_dict(response):
-    assert is_success_code(response)
-    return response.json()
-
-
 def is_schema_in_model(schema, model):
     return schema.dict().items() <= model_to_dict(model).items()
+
+
+def is_dict_in_response(dict, response):
+    return dict.items() <= response.json().items()
 
 
 def model_to_dict(obj):
@@ -45,11 +44,11 @@ def random_email() -> str:
     return f"{random_lower_string()}@{random_lower_string()}.com"
 
 
-def is_success_code(response) -> bool:
+def is_success_code_response(response) -> bool:
     return 200 <= response.status_code < 300
 
 
-def is_http_error(response, detail: str = None) -> bool:
+def is_error_code_response(response, detail: str = None) -> bool:
 
     check = 400 <= response.status_code < 500
     if check and detail:

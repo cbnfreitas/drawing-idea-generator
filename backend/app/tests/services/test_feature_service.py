@@ -1,12 +1,9 @@
-from typing import Any
-
-from app.tests.utils.feature_utils import (create_random_feature_schema,
-                                           create_random_feature_with_service)
 from sqlalchemy.orm import Session
 
 from ...services import feature_service
-from ..utils import (is_schema_in_model, model_to_dict, random_integer,
-                     random_lower_string)
+from ..utils import is_schema_in_model
+from ..utils.feature_utils import (create_random_feature_schema,
+                                   create_random_feature_with_service)
 
 
 def test_create_feature_service(db: Session) -> None:

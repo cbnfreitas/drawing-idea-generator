@@ -1,0 +1,10 @@
+
+@baseurl = localhost:8000
+
+####
+POST /features HTTP/1.1
+host: {{baseurl}}
+
+{
+  "name": "random" 
+}

@@ -5,7 +5,7 @@
 # from fastapi.testclient import TestClient
 # from sqlalchemy.orm import Session
 
-# from ..utils import (is_http_error, is_success_code, random_email,
+# from ..utils import (is_error_code_response, is_success_code_response, random_email,
 #                      random_lower_string)
 # from ..utils.user_utils import create_or_update_user_via_service
 
@@ -18,7 +18,7 @@
 #     data = {"email": username, "password": password}
 #     response = client.post(
 #         route_paths.ROUTE_USERS, headers=admin_token_headers, json=data)
-#     assert is_success_code(response)
+#     assert is_success_code_response(response)
 #     created_user = response.json()
 
 #     user = user_service.read_by_email(db, email=username)
@@ -36,7 +36,7 @@
 #     response = client.post(
 #         route_paths.ROUTE_USERS, headers=admin_token_headers, json=data)
 #     created_user = response.json()
-#     assert is_http_error(response)
+#     assert is_error_code_response(response)
 #     assert "_id" not in created_user
 
 
@@ -48,7 +48,7 @@
 #     data = {"email": email, "password": password}
 #     response = client.post(
 #         route_paths.ROUTE_USERS, headers=user_token_headers, json=data)
-#     assert is_http_error(response)
+#     assert is_error_code_response(response)
 
 
 # def test_update_user(
@@ -62,7 +62,7 @@
 #     response = client.put(f"{route_paths.ROUTE_USERS}/{user_id}",
 #                           headers=admin_token_headers, json=data)
 
-#     assert is_success_code(response)
+#     assert is_success_code_response(response)
 #     response = response.json()
 #     assert response["full_name"] == full_name
 
@@ -77,7 +77,7 @@
 #     response = client.put(f"{route_paths.ROUTE_USERS}/{user_id}",
 #                           headers=admin_token_headers, json=data)
 
-#     assert is_http_error(response)
+#     assert is_error_code_response(response)
 
 
 # def test_fail_to_update_user_with_email_already_in_use(
@@ -91,7 +91,7 @@
 #     response = client.put(f"{route_paths.ROUTE_USERS}/{user2_id}",
 #                           headers=admin_token_headers, json=data)
 
-#     assert is_http_error(response)
+#     assert is_error_code_response(response)
 
 
 # def test_read_user_from_id(
@@ -101,7 +101,7 @@
 #     user_id = user.id
 #     response = client.get(f"{route_paths.ROUTE_USERS}/{user_id}",
 #                           headers=admin_token_headers)
-#     assert is_success_code(response)
+#     assert is_success_code_response(response)
 
 #     api_user = response.json()
 #     assert user.email == api_user["email"]
@@ -114,7 +114,7 @@
 #     create_or_update_user_via_service(db)
 
 #     response = client.get(route_paths.ROUTE_USERS, headers=admin_token_headers)
-#     assert is_success_code(response)
+#     assert is_success_code_response(response)
 
 #     all_users = response.json()
 #     assert len(all_users) >= 2
@@ -129,7 +129,7 @@
 #     user_id = user.id
 #     response = client.delete(
 #         f"{route_paths.ROUTE_USERS}/{user_id}", headers=admin_token_headers)
-#     assert is_success_code(response)
+#     assert is_success_code_response(response)
 
 
 # def test_fail_to_remove_user_with_id_not_found(
@@ -138,4 +138,4 @@
 #     user_id_too_high_to_exist = 999999
 #     response = client.delete(
 #         f"{route_paths.ROUTE_USERS}/{user_id_too_high_to_exist}", headers=admin_token_headers)
-#     assert is_http_error(response)
+#     assert is_error_code_response(response)
