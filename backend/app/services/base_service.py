@@ -1,6 +1,6 @@
-from app.core.utils import schema_or_dict_to_dict
 from typing import Any, Dict, Generic, List, Type, TypeVar, Union
 
+from app.core.utils import schema_or_dict_to_dict
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel as BaseSchema
 from sqlalchemy import Column
@@ -73,13 +73,17 @@ class _BaseService(Generic[BaseModelType]):
             self,
             db: Session,
             conditions=True
-    ):
+    ) -> bool:
         """
         Delete a `ModelType` by `id` on the database.
         """
         db_obj = db.query(self.model).filter(conditions)
+        if not db_obj:
+            return False
+
         db_obj.delete()
         db.commit()
+        return True
 
 
 class BaseService(_BaseService, Generic[BaseModelType, CreateSchemaType, UpdateSchemaType]):
@@ -152,9 +156,9 @@ class BaseService(_BaseService, Generic[BaseModelType, CreateSchemaType, UpdateS
             self,
             db: Session,
             id: int
-    ):
+    ) -> bool:
         """
         Delete a `ModelType` by `id` in the database and
         return the deleted `ModelType`.
         """
-        self._delete(db, self.model_id == id)
+        return self._delete(db, self.model_id == id)
