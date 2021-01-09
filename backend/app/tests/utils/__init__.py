@@ -1,6 +1,7 @@
 import random
 import string
 from datetime import date, datetime
+from functools import wraps
 
 from pydantic.networks import EmailStr
 from sqlalchemy.sql.sqltypes import DateTime
@@ -65,3 +66,13 @@ def is_error_code_response(response, detail: str = None) -> bool:
 
 def has_error_detail(e, detail: str = None) -> bool:
     return e.value.detail == detail  # type: ignore
+
+
+def see_also(arg1):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            result = f(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator

@@ -1,3 +1,6 @@
+from functools import wraps
+
+from app.schemas.auth_schema import ActivationRequestSchema
 from app.schemas.user_schema import UserCreateSchema
 from fastapi.testclient import TestClient
 from pydantic.networks import EmailStr
@@ -5,15 +8,17 @@ from sqlalchemy.orm import Session
 
 from ...core import error_msgs, route_paths
 from ...core.security import create_password_reset_token, decode_sub_jwt
-from ...routers.auth_router import registration
+from ...routers.auth_router import activation, registration
 from ...services.user_service import user_service
 from ..utils import (is_error_code_response, is_success_code_response,
-                     random_email, random_lower_string)
+                     random_email, random_lower_string, see_also)
 from ..utils.auth_utils import (get_access_token_from_email,
+                                user_auth_activation_from_security,
                                 user_auth_refresh_from_security)
 from ..utils.user_utils import create_or_update_user_via_service
 
 
+@see_also(registration)
 def test_register_router(client: TestClient, db: Session) -> None:
 
     registration_data = UserCreateSchema(
@@ -24,6 +29,7 @@ def test_register_router(client: TestClient, db: Session) -> None:
     assert is_success_code_response(response)
 
 
+@see_also(registration)
 def test_failt_to_register_router_email_already_in_use(client: TestClient, db: Session) -> None:
     user = create_or_update_user_via_service(db)
     registration_data = UserCreateSchema(
@@ -34,6 +40,18 @@ def test_failt_to_register_router_email_already_in_use(client: TestClient, db: S
 
     assert is_error_code_response(
         response, error_msgs.EMAIL_ALREADY_IN_USE)
+
+
+@see_also(activation)
+def test_activation_router(client: TestClient, db: Session) -> None:
+    user = create_or_update_user_via_service(db)
+    activation_dict = user_auth_activation_from_security(user_email=user.email)
+    activation_body = ActivationRequestSchema(**activation_dict).dict()
+
+    response = client.post(
+        route_paths.ROUTE_AUTH_ACTIVATION, json=activation_body)
+
+    assert is_success_code_response(response)
 
 
 def test_login(client: TestClient, db: Session) -> None:

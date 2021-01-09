@@ -15,8 +15,8 @@ from sqlalchemy.orm import Session
 from ..core import route_paths
 from ..core.email_builder import (send_activation_email,
                                   send_reset_password_email)
-from ..core.security import (create_password_reset_token,
-                             create_activation_token, decode_sub_jwt)
+from ..core.security import (create_activation_token,
+                             create_password_reset_token, decode_sub_jwt)
 from ..models.user_model import UserModel
 from ..schemas.auth_schema import (LoginResponseSchema,
                                    PasswordChangeRequestSchema,
@@ -30,7 +30,7 @@ from ..services import denied_token_redis, user_service
 auth_router = APIRouter()
 
 
-@auth_router.post(f"{route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL}", response_model=MsgResponseSchema)
+@auth_router.post(route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL, response_model=MsgResponseSchema)
 def registration(
         db: Session = Depends(depends.get_db),
         *,
@@ -56,7 +56,7 @@ def registration(
 
 @auth_router.post(route_paths.ROUTE_AUTH_ACTIVATION, response_model=MsgResponseSchema)
 def activation(
-        user_db_activation: UserModel = Depends(
+        user_db: UserModel = Depends(
             depends.get_user_db_from_activation_token),
         db: Session = Depends(depends.get_db),
 ) -> Any:
@@ -64,7 +64,7 @@ def activation(
     After receiving an activation token from e-mail, activates the user.
     """
 
-    user_service.update(db, id=user_db_activation.id,
+    user_service.update(db, id=user_db.id,
                         obj_in={UserModel.is_active: True})
     return MsgResponseSchema(detail=sucess_msgs.USER_ACTIVATED_SUCCESSFULLY)
 
