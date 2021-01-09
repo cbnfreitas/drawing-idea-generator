@@ -2,6 +2,7 @@ import random
 import string
 from datetime import date, datetime
 
+from pydantic.networks import EmailStr
 from sqlalchemy.sql.sqltypes import DateTime
 
 
@@ -44,8 +45,8 @@ def random_boolean() -> bool:
     return random.choice([True, False])
 
 
-def random_email() -> str:
-    return f"{random_lower_string()}@{random_lower_string()}.com"
+def random_email() -> EmailStr:
+    return EmailStr(f"{random_lower_string()}@{random_lower_string()}.com")
 
 
 def is_success_code_response(response) -> bool:

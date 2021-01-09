@@ -1,14 +1,39 @@
+from app.schemas.user_schema import UserCreateSchema
 from fastapi.testclient import TestClient
+from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
 
 from ...core import error_msgs, route_paths
 from ...core.security import create_password_reset_token, decode_sub_jwt
+from ...routers.auth_router import registration
 from ...services.user_service import user_service
 from ..utils import (is_error_code_response, is_success_code_response,
                      random_email, random_lower_string)
 from ..utils.auth_utils import (get_access_token_from_email,
                                 user_auth_refresh_from_security)
 from ..utils.user_utils import create_or_update_user_via_service
+
+
+def test_register_router(client: TestClient, db: Session) -> None:
+
+    registration_data = UserCreateSchema(
+        email=random_email(), password=random_lower_string()).dict()
+
+    response = client.post(
+        route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL, json=registration_data)
+    assert is_success_code_response(response)
+
+
+def test_failt_to_register_router_email_already_in_use(client: TestClient, db: Session) -> None:
+    user = create_or_update_user_via_service(db)
+    registration_data = UserCreateSchema(
+        email=user.email, password=random_lower_string()).dict()
+
+    response = client.post(
+        route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL, json=registration_data)
+
+    assert is_error_code_response(
+        response, error_msgs.EMAIL_ALREADY_IN_USE)
 
 
 def test_login(client: TestClient, db: Session) -> None:
