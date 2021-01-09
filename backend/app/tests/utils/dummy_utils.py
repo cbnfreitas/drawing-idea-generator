@@ -1,12 +1,25 @@
 
 from typing import Any, Dict
 
+from pydantic import BaseModel as BaseSchema
 from sqlalchemy.orm import Session
 
 from ...models import DummyModel
-from ...schemas.dummy_schema import DummyCreateSchema
 from ...services.base_service import BaseService
 from ...tests.utils import random_lower_string
+
+
+class DummyCreateSchema(BaseSchema):
+    name: str
+
+
+class DummyReadSchema(BaseSchema):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
 
 dummy_service = BaseService[DummyModel,
                             DummyCreateSchema, DummyCreateSchema](DummyModel, DummyModel.id)

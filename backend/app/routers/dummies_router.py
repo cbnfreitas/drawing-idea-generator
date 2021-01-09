@@ -5,8 +5,8 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..core import route_paths
 from ..routers.base_router import base_router
-from ..schemas.dummy_schema import DummyCreateSchema, DummyReadSchema
-from ..tests.utils.dummy_utils import dummy_service
+from ..tests.utils.dummy_utils import (DummyCreateSchema, DummyReadSchema,
+                                       dummy_service)
 
 dummies_router = APIRouter()
 

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 
 from ...models import DummyModel
-from ...schemas.dummy_schema import DummyCreateSchema
 from ..utils import is_schema_in_model
 from ..utils.dummy_utils import (create_random_dummy_schema,
                                  create_random_dummy_with_service,
