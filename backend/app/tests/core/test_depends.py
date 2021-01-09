@@ -13,7 +13,8 @@ from ...core.security import create_refresh_token
 from ...models.user_model import UserModel
 from ...schemas.auth_schema import RefreshRequestSchema
 from ...services import denied_token_redis, user_service
-from ..utils import has_error_detail, random_email, random_integer
+from ..utils import (has_error_detail, random_email, random_integer,
+                     random_lower_string)
 from ..utils.auth_utils import (get_access_token_from_email,
                                 user_auth_headers_from_security,
                                 user_auth_refresh_from_security)
@@ -90,11 +91,23 @@ def test_fail_get_user_db_from_refresh_token_auth_change_after_one_milliseconds(
     refresh_dict = user_auth_refresh_from_security(user_id=user.id)
     refresh_body = RefreshRequestSchema(**refresh_dict)
 
-    new_email = random_email()
+    new_password = random_lower_string()
     time.sleep(.001)
     user_service.update(
-        db, id=user.id, obj_in=UserUpdateSchema(email=new_email))
+        db, id=user.id, obj_in=UserUpdateSchema(password=new_password))
 
     with raises(Exception) as e:
         assert get_user_db_from_refresh_token(db=db, refresh_body=refresh_body)
     assert has_error_detail(e, error_msgs.STALE_CREDENTIALS)
+
+
+def test_fail_get_user_db_from_refresh_token_user_deleted(db: Session):
+    user = create_or_update_user_via_service(db)
+    refresh_dict = user_auth_refresh_from_security(user_id=user.id)
+    refresh_body = RefreshRequestSchema(**refresh_dict)
+
+    user_service.delete(db, id=user.id)
+
+    with raises(Exception) as e:
+        assert get_user_db_from_refresh_token(db=db, refresh_body=refresh_body)
+    assert has_error_detail(e, error_msgs.USER_NOT_FOUND)

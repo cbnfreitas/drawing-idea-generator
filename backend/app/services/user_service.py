@@ -70,7 +70,7 @@ class BaseUserService(BaseService[UserModel, user_create_schemas, UserUpdateSche
             update_data["hashed_password"] = hashed_password
             auth_change = True
 
-        if update_data.get("email") or update_data.get("is_active") or update_data.get("is_admin"):
+        if update_data.get("is_active") or update_data.get("is_admin"):
             auth_change = True
 
         if auth_change:
@@ -100,17 +100,6 @@ class BaseUserService(BaseService[UserModel, user_create_schemas, UserUpdateSche
             return None
 
         return user
-
-    def activate(
-            self,
-            db: Session,
-            *,
-            user_id: int,
-    ):
-        """
-        Return the `UserModel` matching `email` and (hashed) `password`.
-        """
-        a = user_id
 
 
 user_service = BaseUserService(UserModel, UserModel.id)
