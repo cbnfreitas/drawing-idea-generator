@@ -19,8 +19,8 @@
   "workbench.tree.indent": 12,
   "workbench.colorCustomizations": {
     "[Default Dark+]": {
-      "titleBar.activeBackground": "#7a6c18",
-      "statusBar.background": "#7a6c18"
+      "titleBar.activeBackground": "#7a186d",
+      "statusBar.background": "#7a186d"
     }
   },
   "editor.formatOnSave": true,
