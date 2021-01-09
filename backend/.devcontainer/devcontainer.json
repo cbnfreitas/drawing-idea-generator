@@ -20,7 +20,8 @@
 		"ms-python.python",
 		"ms-python.vscode-pylance",
 		"humao.rest-client",
-		"attilabuti.vscode-mjml"
+		"attilabuti.vscode-mjml",
+		"alexcvzz.vscode-sqlite"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
