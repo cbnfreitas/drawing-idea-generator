@@ -2,11 +2,22 @@
 from typing import Any, Dict
 
 from pydantic import BaseModel as BaseSchema
-from sqlalchemy.orm import Session
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import Session, relationship
 
-from ...models import DummyModel
+from ...core.session import engine
+from ...models import BaseModel
 from ...services.base_service import BaseService
 from ...tests.utils import random_lower_string
+
+
+class DummyModel(BaseModel):
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+
+
+table_objects = [DummyModel.__table__]  # type: ignore
+BaseModel.metadata.create_all(engine, tables=table_objects)  # type: ignore
 
 
 class DummyCreateSchema(BaseSchema):
