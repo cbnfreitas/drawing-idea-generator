@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 
-from ...services import dummy_service
+from ...models import DummyModel
+from ...schemas.dummy_schema import DummyCreateSchema
 from ..utils import is_schema_in_model
 from ..utils.dummy_utils import (create_random_dummy_schema,
-                                 create_random_dummy_with_service)
+                                 create_random_dummy_with_service,
+                                 dummy_service)
 
 
 def test_create_dummy_service(db: Session) -> None:

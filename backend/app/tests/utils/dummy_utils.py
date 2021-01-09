@@ -5,8 +5,11 @@ from sqlalchemy.orm import Session
 
 from ...models import DummyModel
 from ...schemas.dummy_schema import DummyCreateSchema
-from ...services import dummy_service
+from ...services.base_service import BaseService
 from ...tests.utils import random_lower_string
+
+dummy_service = BaseService[DummyModel,
+                            DummyCreateSchema, DummyCreateSchema](DummyModel, DummyModel.id)
 
 
 def create_random_dummy_schema() -> DummyCreateSchema:
