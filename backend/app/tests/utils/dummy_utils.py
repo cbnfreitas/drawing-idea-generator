@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session, relationship
 
 from ...core.session import engine
 from ...models import BaseModel
-from ...services.base_service import BaseService
+from ...services.base_service import BaseService, _BaseService
 from ...tests.utils import random_lower_string
 
 
@@ -31,6 +31,8 @@ class DummyReadSchema(BaseSchema):
     class Config:
         orm_mode = True
 
+
+_dummy_service = _BaseService[DummyModel](DummyModel)
 
 dummy_service = BaseService[DummyModel,
                             DummyCreateSchema, DummyCreateSchema](DummyModel, DummyModel.id)
