@@ -2,7 +2,8 @@ from typing import Dict
 
 from sqlalchemy.orm import Session
 
-from ...core.security import create_access_token, create_refresh_token
+from ...core.security import (create_access_token, create_activation_token,
+                              create_refresh_token)
 from ..utils import random_email
 from ..utils.user_utils import create_or_update_user_via_service
 
@@ -27,6 +28,17 @@ def user_auth_refresh_from_security(
     refresh_token = create_refresh_token(user_id=user_id)
     refresh_body = {"refresh_token": refresh_token}
     return refresh_body
+
+
+def user_auth_activation_from_security(
+        *, user_email: str
+) -> Dict[str, str]:
+    '''
+    Create refresh token for a user.
+    '''
+    activation_token = create_activation_token(email=user_email)
+    activation_body = {"activation_token": activation_token}
+    return activation_body
 
 
 def get_access_token_from_email(*,  db: Session, email: str = None, password: str = None) -> Dict[str, str]:

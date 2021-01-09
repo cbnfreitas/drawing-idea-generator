@@ -7,15 +7,18 @@ from sqlalchemy.orm.session import Session
 
 from ...core import error_msgs, s
 from ...core.depends import (get_admin_from_access_token, get_db,
+                             get_user_db_from_activation_token,
                              get_user_db_from_refresh_token,
                              get_user_from_access_token)
 from ...core.security import create_refresh_token
 from ...models.user_model import UserModel
-from ...schemas.auth_schema import RefreshRequestSchema
+from ...schemas.auth_schema import (ActivationRequestSchema,
+                                    RefreshRequestSchema)
 from ...services import denied_token_redis, user_service
 from ..utils import (has_error_detail, random_email, random_integer,
                      random_lower_string)
 from ..utils.auth_utils import (get_access_token_from_email,
+                                user_auth_activation_from_security,
                                 user_auth_headers_from_security,
                                 user_auth_refresh_from_security)
 from ..utils.user_utils import create_or_update_user_via_service
@@ -111,3 +114,25 @@ def test_fail_get_user_db_from_refresh_token_user_deleted(db: Session):
     with raises(Exception) as e:
         assert get_user_db_from_refresh_token(db=db, refresh_body=refresh_body)
     assert has_error_detail(e, error_msgs.USER_NOT_FOUND)
+
+
+def test_get_user_db_from_activation_token(db: Session):
+    user = create_or_update_user_via_service(db)
+    activation_dict = user_auth_activation_from_security(user_email=user.email)
+    activation_body = ActivationRequestSchema(**activation_dict)
+
+    user_db_token = get_user_db_from_activation_token(
+        db=db, activation_body=activation_body)
+    assert user_db_token.id == user.id
+
+
+def test_fail_get_user_db_from_activation_token_with_refresh_token(db: Session):
+    user = create_or_update_user_via_service(db)
+    refresh_dict = user_auth_refresh_from_security(user_id=user.id)
+    wrong_activation_body = ActivationRequestSchema(
+        activation_token=refresh_dict['refresh_token'])
+
+    with raises(Exception) as e:
+        assert get_user_db_from_activation_token(
+            db=db, activation_body=wrong_activation_body)
+    assert has_error_detail(e, error_msgs.INVALID_TOKEN)

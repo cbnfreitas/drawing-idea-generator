@@ -5,6 +5,7 @@ import app.core.error_msgs as error_msgs
 import app.core.security as security
 from fastapi import Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.engine import strategies
 from sqlalchemy.orm import Session
 
 from ..core import route_paths
@@ -53,29 +54,36 @@ def get_admin_from_access_token(
     return admin_token_data
 
 
-def get_user_db_from_refresh_token(
-        refresh_body: RefreshRequestSchema,
+def get_user_db_from_token(
+        token: str,
+        token_type: str,
         db: Session = Depends(get_db)
 ) -> UserModel:
 
-    refresh_token = refresh_body.refresh_token
-
     try:
-        refresh_token_data = security.decode_sub_jwt(db, refresh_token)
+        token_data = security.decode_sub_jwt(db, token)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=e.args[0])
 
-    user_db = user_service.read(
-        db, id=refresh_token_data["user_id"])
+    if token_type == 'refresh':
+        user_db = user_service.read(
+            db, id=token_data["user_id"])
+    else:
+        if "is_active" not in token_data or not token_data["is_active"]:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=error_msgs.INVALID_TOKEN)
+        user_db = user_service.read_by_email(
+            db, email=token_data["email"])
 
     if not user_db:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=error_msgs.USER_NOT_FOUND)
 
-    token_timestamp = refresh_token_data["token_timestamp"]
+    token_timestamp = token_data["token_timestamp"]
     auth_change_timestamp = user_db.last_auth_change.timestamp()
 
     if token_timestamp < auth_change_timestamp:
@@ -84,41 +92,17 @@ def get_user_db_from_refresh_token(
             detail=error_msgs.STALE_CREDENTIALS)
 
     return user_db
+
+
+def get_user_db_from_refresh_token(
+        refresh_body: RefreshRequestSchema,
+        db: Session = Depends(get_db)
+) -> UserModel:
+    return get_user_db_from_token(refresh_body.refresh_token, "refresh", db)
 
 
 def get_user_db_from_activation_token(
         activation_body: ActivationRequestSchema,
         db: Session = Depends(get_db)
 ) -> UserModel:
-
-    activation_token = activation_body.activation_token
-
-    try:
-        activation_token_data = security.decode_sub_jwt(db, activation_token)
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=e.args[0])
-
-    if "is_active" not in activation_token_data or not activation_token_data["is_active"]:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=error_msgs.USER_NOT_FOUND)
-
-    user_db = user_service.read_by_email(
-        db, email=activation_token_data["email"])
-
-    if not user_db:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=error_msgs.USER_NOT_FOUND)
-
-    token_timestamp = activation_token_data["token_timestamp"]
-    auth_change_timestamp = user_db.last_auth_change.timestamp()
-
-    if token_timestamp < auth_change_timestamp:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=error_msgs.STALE_CREDENTIALS)
-
-    return user_db
+    return get_user_db_from_token(activation_body.activation_token, "activation", db)

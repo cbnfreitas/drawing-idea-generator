@@ -16,7 +16,7 @@ from ..core import route_paths
 from ..core.email_builder import (send_activation_email,
                                   send_reset_password_email)
 from ..core.security import (create_password_reset_token,
-                             create_user_activation_token, decode_sub_jwt)
+                             create_activation_token, decode_sub_jwt)
 from ..models.user_model import UserModel
 from ..schemas.auth_schema import (LoginResponseSchema,
                                    PasswordChangeRequestSchema,
@@ -48,7 +48,7 @@ def registration(
             detail=error_msgs.EMAIL_ALREADY_IN_USE)
 
     new_user = user_service.create(db, obj_in=new_user_in)
-    activation_token = create_user_activation_token(email=new_user.email)
+    activation_token = create_activation_token(email=new_user.email)
     send_activation_email(user=new_user, token=activation_token)
 
     return MsgResponseSchema(detail=sucess_msgs.ACTIVATION_SENT_TO_EMAIL)

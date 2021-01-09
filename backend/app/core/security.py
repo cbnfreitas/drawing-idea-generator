@@ -95,7 +95,7 @@ def create_password_reset_token(
     return encoded
 
 
-def create_user_activation_token(
+def create_activation_token(
         *,
         email: str,
         exp_delta_hours: float = s.EMAIL_ACTIVATION_TOKEN_EXPIRE_HOURS
