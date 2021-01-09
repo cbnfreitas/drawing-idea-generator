@@ -51,9 +51,10 @@ def decode_sub_jwt(
         )
         exp = payload.get("exp")
 
-        now_timestamp = datetime.utcnow().timestamp()
-        if now_timestamp > exp:  # type: ignore
-            raise jwt.ExpiredSignatureError
+        # FOR SOME REASONS ExpiredSignatureError WAS NOT ALWAYS RAISED.
+        # now_timestamp = datetime.utcnow().timestamp()
+        # if now_timestamp > exp:  # type: ignore
+        #     raise jwt.ExpiredSignatureError
 
     except jwt.ExpiredSignatureError as e:
         raise Exception(error_msgs.EXPIRED_TOKEN)
