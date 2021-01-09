@@ -23,8 +23,7 @@ from ..schemas.auth_schema import (LoginResponseSchema,
                                    PasswordResetRequestSchema,
                                    RefreshResponseSchema)
 from ..schemas.msg_schema import MsgResponseSchema
-from ..schemas.user_schema import (UserCreateSchema, UserUpdateActivateSchema,
-                                   UserUpdateSchema)
+from ..schemas.user_schema import UserCreateSchema, UserUpdateSchema
 from ..services import denied_token_redis, user_service
 
 auth_router = APIRouter()

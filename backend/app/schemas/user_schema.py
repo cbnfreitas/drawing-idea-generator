@@ -41,14 +41,6 @@ class UserUpdateSchema(BaseSchema):
 
 
 @autocomplete
-class UserUpdateActivateSchema(BaseSchema):
-    is_active = True
-
-    class Config:
-        extra = 'forbid'
-
-
-@autocomplete
 class UserReadSchema(BaseSchema):
     id: int
     full_name: Optional[str]
