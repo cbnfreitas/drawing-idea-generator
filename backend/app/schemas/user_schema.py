@@ -35,6 +35,7 @@ user_create_schemas = Union[UserCreateSchemaAdmin, UserCreateSchema]
 class UserUpdateSchema(BaseSchema):
     password:  Optional[str] = None
     full_name: Optional[str] = None
+    email: Optional[str] = None
 
     class Config:
         extra = 'forbid'

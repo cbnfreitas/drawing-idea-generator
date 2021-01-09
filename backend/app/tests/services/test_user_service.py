@@ -11,7 +11,7 @@ from ...services import user_service
 from ..utils import random_email, random_lower_string
 
 
-def test_create_user(db: Session) -> None:
+def test_create_user_service(db: Session) -> None:
     email = random_email()
     password = random_lower_string()
     user_in = UserCreateSchemaAdmin(
