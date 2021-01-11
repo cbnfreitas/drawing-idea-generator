@@ -14,10 +14,10 @@ ROUTE_AUTH_PASSWORD_RESET = "/auth/password-reset"
 ROUTE_AUTH_PASSWORD_CHANGE = "/auth/password-change"
 
 ROUTE_USER = "/users"
+
 ROUTE_USER_ME = "/users/me"
 
 ROUTE_IDEA = "/ideas"
 
 ROUTE_FEATURE = "/features"
 ROUTE_VALUE = "/values"
-

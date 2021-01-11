@@ -8,7 +8,7 @@ from ..routes.base_route import base_route
 from ..schemas.feature_schema import FeatureCreateSchema, FeatureReadSchema
 from ..services import value_service
 
-values_route = APIRouter()
+value_route = APIRouter()
 
-base_route(values_route,  route_paths.ROUTE_VALUE, "values", "values", value_service,
+base_route(value_route,  route_paths.ROUTE_VALUE, "values", "values", value_service,
            FeatureCreateSchema, FeatureReadSchema)
