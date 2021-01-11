@@ -9,7 +9,7 @@
 ## TODO
 
 * Automatic import all files under `services\__init__`, `models\__ini__` and `routes\__ini__`
-* Automatic test automation creation. Check whether schema and model are compatible!
+* Automatic test automation creation. Check whether schema and model are compatible! (https://docs.pytest.org/en/stable/parametrize.html)
 
 
 ### Low priority
