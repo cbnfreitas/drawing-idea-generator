@@ -1,3 +1,4 @@
+from app.services.base_service import BaseService
 import pytest
 from sqlalchemy.orm import Session
 
@@ -6,7 +7,7 @@ from ..utils import is_schema_in_model
 
 class _TestBaseService:
     def test_create_entity_service(
-            self, db: Session, entity_service, create_random_entity_schema, create_random_entity_with_service
+            self, db: Session, entity_service: BaseService, create_random_entity_schema, create_random_entity_with_service
     ) -> None:
         random_entity_schema = create_random_entity_schema()
         created_entity_model = entity_service.create(
