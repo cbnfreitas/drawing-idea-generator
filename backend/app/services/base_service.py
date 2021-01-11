@@ -39,14 +39,15 @@ class _BaseService(Generic[BaseModelType]):
         """
         db_obj = self.model(**obj_in)
         db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
 
-        try:
-            db.commit()
-            db.refresh(db_obj)
-        except Exception as e:
-            db.rollback()
-            raise e
-
+        # try:
+        #     db.commit()
+        #     db.refresh(db_obj)
+        # except Exception as e:
+        #     db.rollback()
+        #     raise e
         return db_obj
 
     def _read(
@@ -71,12 +72,13 @@ class _BaseService(Generic[BaseModelType]):
         """
         db_obj = db.query(self.model).filter(conditions)
         db_obj.update(update_data)
+        db.commit()
 
-        try:
-            db.commit()
-        except Exception as e:
-            db.rollback()
-            raise e
+        # try:
+        #     db.commit()
+        # except Exception as e:
+        #     db.rollback()
+        #     raise e
 
         return db_obj
 
@@ -93,12 +95,13 @@ class _BaseService(Generic[BaseModelType]):
             return False
 
         db_obj.delete()
+        db.commit()
 
-        try:
-            db.commit()
-        except Exception as e:
-            db.rollback()
-            raise e
+        # try:
+        #     db.commit()
+        # except Exception as e:
+        #     db.rollback()
+        #     raise e
 
         return True
 
