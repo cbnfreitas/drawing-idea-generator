@@ -74,8 +74,9 @@ class _BaseService(Generic[BaseModelType]):
 
         try:
             db.commit()
-        except:
+        except Exception as e:
             db.rollback()
+            raise e
 
         return db_obj
 
@@ -95,8 +96,9 @@ class _BaseService(Generic[BaseModelType]):
 
         try:
             db.commit()
-        except:
+        except Exception as e:
             db.rollback()
+            raise e
 
         return True
 
