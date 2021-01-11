@@ -7,7 +7,7 @@
 # from ..core.db.base import Base
 # from ..core.db.session import engine
 # from ..core.depends import get_db
-# from ..routers.external.google_scraper import scraper
+# from ..routes.external.google_scraper import scraper
 # from ..schemas.rank_schema import RankRequestSchema
 # from ..services import (domain_service, keyword_service, rank_service,
 #                         user_service)

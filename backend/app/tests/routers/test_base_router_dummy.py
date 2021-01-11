@@ -44,7 +44,7 @@ def test_fail_to_read_one_dummy_router_with_non_existing_id(db: Session, client:
     assert read_dummy_router_response.status_code == status.HTTP_404_NOT_FOUND
 
 
-def test_read_many_dummies_router(
+def test_read_many_dummies_route(
         client: TestClient, db: Session
 ) -> None:
     random_dummy_model = create_random_dummy_with_service(db)

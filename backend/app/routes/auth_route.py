@@ -26,10 +26,10 @@ from ..schemas.msg_schema import MsgResponseSchema
 from ..schemas.user_schema import UserCreateSchema, UserUpdateSchema
 from ..services import denied_token_redis, user_service
 
-auth_router = APIRouter()
+auth_route = APIRouter()
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL, response_model=MsgResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_REGISTER_AND_ACTIVATION_TOKEN_TO_EMAIL, response_model=MsgResponseSchema)
 def registration(
         db: Session = Depends(depends.get_db),
         *,
@@ -53,7 +53,7 @@ def registration(
     return MsgResponseSchema(detail=sucess_msgs.ACTIVATION_SENT_TO_EMAIL)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_ACTIVATION, response_model=MsgResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_ACTIVATION, response_model=MsgResponseSchema)
 def activation(
         user_db: UserModel = Depends(
             depends.get_user_db_from_activation_token),
@@ -68,7 +68,7 @@ def activation(
     return MsgResponseSchema(detail=sucess_msgs.USER_ACTIVATED_SUCCESSFULLY)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_LOGIN, response_model=LoginResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_LOGIN, response_model=LoginResponseSchema)
 def login(
         db: Session = Depends(depends.get_db),
         form_data: OAuth2PasswordRequestForm = Depends()
@@ -93,7 +93,7 @@ def login(
     return LoginResponseSchema(access_token=access_token, refresh_token=refresh_token)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_LOGOUT, response_model=MsgResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_LOGOUT, response_model=MsgResponseSchema)
 def logout(
         db: Session = Depends(depends.get_db),
         user_token_data: Dict[str, Any] = Depends(
@@ -108,7 +108,7 @@ def logout(
     return MsgResponseSchema(detail=sucess_msgs.LOGOUT_SUCCESSFULLY)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_REFRESH, response_model=RefreshResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_REFRESH, response_model=RefreshResponseSchema)
 def refresh(
         user_db_refresh: UserModel = Depends(
             depends.get_user_db_from_refresh_token)
@@ -123,7 +123,7 @@ def refresh(
     return RefreshResponseSchema(access_token=new_access_token)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_PASSWORD_CHANGE, response_model=MsgResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_PASSWORD_CHANGE, response_model=MsgResponseSchema)
 def password_change(
         payload: PasswordChangeRequestSchema,
         db: Session = Depends(depends.get_db),
@@ -145,8 +145,8 @@ def password_change(
     return MsgResponseSchema(detail=sucess_msgs.PASSWORD_UPDATED_SUCCESSFULLY)
 
 
-@auth_router.post(f"{route_paths.ROUTE_AUTH_PASSWORD_RESET_TOKEN_TO_EMAIL}/{{email}}",
-                  response_model=MsgResponseSchema)
+@auth_route.post(f"{route_paths.ROUTE_AUTH_PASSWORD_RESET_TOKEN_TO_EMAIL}/{{email}}",
+                 response_model=MsgResponseSchema)
 def password_reset_token_to_email(
         email: str, db: Session = Depends(depends.get_db)
 ) -> Any:
@@ -166,7 +166,7 @@ def password_reset_token_to_email(
     return MsgResponseSchema(detail=sucess_msgs.PASSWORD_RECOVERY_SENT_TO_EMAIL)
 
 
-@auth_router.post(route_paths.ROUTE_AUTH_PASSWORD_RESET, response_model=MsgResponseSchema)
+@auth_route.post(route_paths.ROUTE_AUTH_PASSWORD_RESET, response_model=MsgResponseSchema)
 def password_reset(
         payload: PasswordResetRequestSchema,
         db: Session = Depends(depends.get_db),

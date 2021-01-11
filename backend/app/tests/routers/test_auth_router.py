@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from ...core import error_msgs, route_paths
 from ...core.security import create_password_reset_token, decode_sub_jwt
-from ...routers.auth_router import activation, registration
+from ...routes.auth_route import activation, registration
 from ...services.user_service import user_service
 from ..utils import (is_error_code_response, is_success_code_response,
                      random_email, random_lower_string, see_also)

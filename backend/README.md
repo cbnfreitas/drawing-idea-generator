@@ -9,8 +9,8 @@
 ## TODO
 
 * Base crud uri, singular and plural...
-* Change `routers` to `routes`
-* Automatic import all files under `services\__init__`, `models\__ini__` and `routers\__ini__`
+* Change `routes` to `routes`
+* Automatic import all files under `services\__init__`, `models\__ini__` and `routes\__ini__`
 * Automatic test automation creation. Check whether schema and model are compatible!
 
 

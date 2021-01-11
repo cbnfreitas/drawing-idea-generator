@@ -1,6 +1,6 @@
 from typing import Dict
 
-from app.routers.users_me_router import (
+from app.routes.users_me_route import (
     read_current_user_info_from_access_token, update_user_from_access_token)
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session

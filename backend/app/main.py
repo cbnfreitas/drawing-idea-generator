@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core import s
 from .core.baseline import baseline
 from .core.session import SessionLocal
-from .routers import api_router
+from .routes import api_router
 
 db = SessionLocal()
 baseline(db)

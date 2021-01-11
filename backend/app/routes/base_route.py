@@ -12,7 +12,7 @@ from ..schemas.msg_schema import MsgResponseSchema
 from ..services import BaseService
 
 
-def base_router(
+def base_route(
     router: APIRouter,
     uri: str,
     entity_name_plural: str,

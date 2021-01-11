@@ -4,11 +4,11 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 
 from ..core import route_paths
-from ..routers.base_router import base_router
+from ..routes.base_route import base_route
 from ..tests.utils.dummy_utils import (DummyCreateSchema, DummyReadSchema,
                                        dummy_service)
 
-dummies_router = APIRouter()
+dummies_route = APIRouter()
 
-base_router(dummies_router,  route_paths.ROUTE_DUMMIES, "dummies", "dummy", dummy_service,
-            DummyCreateSchema, DummyReadSchema)
+base_route(dummies_route,  route_paths.ROUTE_DUMMIES, "dummies", "dummy", dummy_service,
+           DummyCreateSchema, DummyReadSchema)

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from ..core import route_paths
 from ..core.depends import get_db, get_user_from_access_token
-from ..routers.users_router import update_user_by_helper
+from ..routes.users_route import update_user_by_helper
 from ..schemas.user_schema import UserReadSchema, UserUpdateSchema
 from ..services import user_service
 
