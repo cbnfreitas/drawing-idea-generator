@@ -8,7 +8,7 @@ from ..routes.base_route import base_route
 from ..tests.utils.dummy_utils import (DummyCreateSchema, DummyReadSchema,
                                        dummy_service)
 
-dummies_route = APIRouter()
+dummy_route = APIRouter()
 
-base_route(dummies_route,  route_paths.ROUTE_DUMMIES, "dummies", "dummy", dummy_service,
+base_route(dummy_route,  route_paths.ROUTE_DUMMY, "dummies", "dummy", dummy_service,
            DummyCreateSchema, DummyReadSchema)

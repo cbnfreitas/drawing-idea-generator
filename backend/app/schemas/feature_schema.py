@@ -10,15 +10,13 @@ from .autocomplete import autocomplete
 
 @autocomplete
 class FeatureCreateSchema(BaseSchema):
-    value: str
-    feature_id: int
+    name: str
 
 
 @autocomplete
 class FeatureReadSchema(BaseSchema):
     id: int
-    value: str
-    feature_id: int
+    name: str
 
     class Config:
         orm_mode = True

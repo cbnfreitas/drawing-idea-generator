@@ -15,7 +15,7 @@ from ..services import user_service
 router = APIRouter()
 
 
-@router.get(route_paths.ROUTE_USERS, response_model=List[UserReadSchema])
+@router.get(route_paths.ROUTE_USER, response_model=List[UserReadSchema])
 def read_users(
         db: Session = Depends(depends.get_db),
         _current_admin: UserModel = Depends(
@@ -31,7 +31,7 @@ def read_users(
     return users
 
 
-@router.post(route_paths.ROUTE_USERS, response_model=UserReadSchema)
+@router.post(route_paths.ROUTE_USER, response_model=UserReadSchema)
 def create_user(
         db: Session = Depends(depends.get_db),
         _current_admin: UserModel = Depends(
@@ -72,7 +72,7 @@ def update_user_by_helper(
     return user
 
 
-@router.get(f"{route_paths.ROUTE_USERS}/{{user_id}}", response_model=UserReadSchema)
+@router.get(f"{route_paths.ROUTE_USER}/{{user_id}}", response_model=UserReadSchema)
 def read_user_by_id(
         db: Session = Depends(depends.get_db),
         _current_admin: UserModel = Depends(
@@ -86,7 +86,7 @@ def read_user_by_id(
     return user_service.read(db, id=user_id)
 
 
-@router.put(f"{route_paths.ROUTE_USERS}/{{user_id}}", response_model=UserReadSchema)
+@router.put(f"{route_paths.ROUTE_USER}/{{user_id}}", response_model=UserReadSchema)
 def update_user_by_id(
         db: Session = Depends(depends.get_db),
         _current_admin: UserModel = Depends(
@@ -102,7 +102,7 @@ def update_user_by_id(
     return user
 
 
-@router.delete(f"{route_paths.ROUTE_USERS}/{{user_id}}")
+@router.delete(f"{route_paths.ROUTE_USER}/{{user_id}}")
 def remove_user_by_id(
         db: Session = Depends(depends.get_db),
         _current_user: UserModel = Depends(

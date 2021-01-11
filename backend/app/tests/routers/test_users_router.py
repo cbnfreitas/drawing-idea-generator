@@ -17,7 +17,7 @@ def test_create_user(
     password = random_lower_string()
     data = {"email": username, "password": password}
     response = client.post(
-        route_paths.ROUTE_USERS, headers=admin_token_headers, json=data)
+        route_paths.ROUTE_USER, headers=admin_token_headers, json=data)
     assert is_success_code_response(response)
     created_user = response.json()
 
@@ -34,7 +34,7 @@ def test_fail_to_create_user_with_existing_username(
     password = random_lower_string()
     data = {"email": email_from_previous_user, "password": password}
     response = client.post(
-        route_paths.ROUTE_USERS, headers=admin_token_headers, json=data)
+        route_paths.ROUTE_USER, headers=admin_token_headers, json=data)
     created_user = response.json()
     assert is_error_code_response(response)
     assert "_id" not in created_user
@@ -47,7 +47,7 @@ def test_fail_to_create_user_by_user(
     password = random_lower_string()
     data = {"email": email, "password": password}
     response = client.post(
-        route_paths.ROUTE_USERS, headers=user_token_headers, json=data)
+        route_paths.ROUTE_USER, headers=user_token_headers, json=data)
     assert is_error_code_response(response)
 
 
@@ -59,7 +59,7 @@ def test_update_user(
     user_id = user.id
     full_name = random_lower_string()
     data = {"full_name": full_name}
-    response = client.put(f"{route_paths.ROUTE_USERS}/{user_id}",
+    response = client.put(f"{route_paths.ROUTE_USER}/{user_id}",
                           headers=admin_token_headers, json=data)
 
     assert is_success_code_response(response)
@@ -74,7 +74,7 @@ def test_fail_to_update_user_with_id_not_found(
     user_id = 99999
     full_name = random_lower_string()
     data = {"full_name": full_name}
-    response = client.put(f"{route_paths.ROUTE_USERS}/{user_id}",
+    response = client.put(f"{route_paths.ROUTE_USER}/{user_id}",
                           headers=admin_token_headers, json=data)
 
     assert is_error_code_response(response)
@@ -88,7 +88,7 @@ def test_fail_to_update_user_with_email_already_in_use(
     user2 = create_or_update_user_via_service(db)
     user2_id = user2.id
     data = {"email": user1.email}
-    response = client.put(f"{route_paths.ROUTE_USERS}/{user2_id}",
+    response = client.put(f"{route_paths.ROUTE_USER}/{user2_id}",
                           headers=admin_token_headers, json=data)
 
     assert is_error_code_response(response)
@@ -99,7 +99,7 @@ def test_read_user_from_id(
 ) -> None:
     user = create_or_update_user_via_service(db)
     user_id = user.id
-    response = client.get(f"{route_paths.ROUTE_USERS}/{user_id}",
+    response = client.get(f"{route_paths.ROUTE_USER}/{user_id}",
                           headers=admin_token_headers)
     assert is_success_code_response(response)
 
@@ -113,7 +113,7 @@ def test_read_user_by_admin(
     create_or_update_user_via_service(db)
     create_or_update_user_via_service(db)
 
-    response = client.get(route_paths.ROUTE_USERS, headers=admin_token_headers)
+    response = client.get(route_paths.ROUTE_USER, headers=admin_token_headers)
     assert is_success_code_response(response)
 
     all_users = response.json()
@@ -128,7 +128,7 @@ def test_remove_user(
     user = create_or_update_user_via_service(db)
     user_id = user.id
     response = client.delete(
-        f"{route_paths.ROUTE_USERS}/{user_id}", headers=admin_token_headers)
+        f"{route_paths.ROUTE_USER}/{user_id}", headers=admin_token_headers)
     assert is_success_code_response(response)
 
 
@@ -137,5 +137,5 @@ def test_fail_to_remove_user_with_id_not_found(
 ) -> None:
     user_id_too_high_to_exist = 999999
     response = client.delete(
-        f"{route_paths.ROUTE_USERS}/{user_id_too_high_to_exist}", headers=admin_token_headers)
+        f"{route_paths.ROUTE_USER}/{user_id_too_high_to_exist}", headers=admin_token_headers)
     assert is_error_code_response(response)

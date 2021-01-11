@@ -6,9 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..core import route_paths
 from ..routes.base_route import base_route
 from ..schemas.feature_schema import FeatureCreateSchema, FeatureReadSchema
-from ..services import value_service
+from ..services import feature_service
 
-values_route = APIRouter()
+feature_route = APIRouter()
 
-base_route(values_route,  route_paths.ROUTE_VALUES, "values", "values", value_service,
+base_route(feature_route,  route_paths.ROUTE_FEATURE, "features", "feature", feature_service,
            FeatureCreateSchema, FeatureReadSchema)
