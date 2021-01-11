@@ -6,28 +6,22 @@ from ..utils import is_schema_in_model
 from ..utils.dummy_utils import (_dummy_service, create_random_dummy_schema,
                                  create_random_dummy_with_service,
                                  dummy_service)
-from ..utils.feature_utils import create_random_feature_schema
+from ..utils.feature_utils import (create_random_feature_schema,
+                                   create_random_feature_with_service)
 
 
-@pytest.mark.parametrize("entity_service, create_random_entity_schema",
-                         [
-                             (dummy_service, create_random_dummy_schema),
-                             (feature_service, create_random_feature_schema)
-                         ])
-class TestBaseService:
-    def test_create_dummy_service(self, db: Session, entity_service, create_random_entity_schema) -> None:
+class _TestBaseService:
+    def test_create_entity_service(self, db: Session, entity_service, create_random_entity_schema, create_random_entity_with_service) -> None:
         random_entity_schema = create_random_entity_schema()
         created_entity_model = entity_service.create(
             db, obj_in=random_entity_schema)
         assert is_schema_in_model(random_entity_schema, created_entity_model)
 
-
-# def test_read_one_dummy_service(db: Session) -> None:
-#     created_dummy_model = create_random_dummy_with_service(db)
-#     created_dummy_model_id = created_dummy_model.id
-#     read_dummy_model = dummy_service.read(db, id=created_dummy_model_id)
-
-#     assert created_dummy_model == read_dummy_model
+    # def test_read_one_entity_service(self, db: Session, entity_service, create_random_entity_with_service) -> None:
+    #     created_entity_model = create_random_entity_with_service(db)
+    #     created_entity_model_id = created_entity_model.id
+    #     read_entity_model = entity_service.read(db, id=created_entity_model_id)
+    #     assert created_entity_model == read_entity_model
 
 
 # def test_read_many_dummies_service(db: Session) -> None:
@@ -64,3 +58,21 @@ class TestBaseService:
 
 # def test_init_private_service(db: Session) -> None:
 #     assert _dummy_service
+
+
+@pytest.mark.parametrize("entity_service, create_random_entity_schema, create_random_entity_with_service",
+                         [
+                             (dummy_service, create_random_dummy_schema,
+                              create_random_dummy_with_service),
+                         ])
+class TestBaseServiceDummy(_TestBaseService):
+    pass
+
+
+@pytest.mark.parametrize("entity_service, create_random_entity_schema, create_random_entity_with_service",
+                         [
+                             (feature_service, create_random_feature_schema,
+                              create_random_feature_with_service)
+                         ])
+class TestBaseServiceFeature(_TestBaseService):
+    pass
