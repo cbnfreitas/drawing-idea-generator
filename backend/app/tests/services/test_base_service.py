@@ -1,11 +1,7 @@
 import pytest
 from sqlalchemy.orm import Session
 
-
 from ..utils import is_schema_in_model
-from ..utils.dummy_utils import (_dummy_service, create_random_dummy_schema,
-                                 create_random_dummy_with_service,
-                                 dummy_service)
 
 
 class _TestBaseService:
@@ -37,9 +33,9 @@ class _TestBaseService:
     ) -> None:
         created_entity_model = create_random_entity_with_service(db)
         created_entity_model_id = created_entity_model.id
-        new_random_entity_schema = create_random_dummy_schema()
+        new_random_entity_schema = create_random_entity_schema()
 
-        updated_entity_model = dummy_service.update(
+        updated_entity_model = entity_service.update(
             db, id=created_entity_model_id, obj_in=new_random_entity_schema)
 
         assert is_schema_in_model(
@@ -64,9 +60,3 @@ class _TestBaseService:
 
 # def test_init_private_service(db: Session) -> None:
 #     assert _dummy_service
-
-
-@pytest.mark.parametrize("entity_service, create_random_entity_schema, create_random_entity_with_service",
-                         [(dummy_service, create_random_dummy_schema, create_random_dummy_with_service)])
-class TestBaseServiceDummy(_TestBaseService):
-    pass
