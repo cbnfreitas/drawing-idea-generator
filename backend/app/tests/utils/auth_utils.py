@@ -2,6 +2,7 @@ from typing import Dict
 
 from sqlalchemy.orm import Session
 
+from ...core import s
 from ...core.security import (create_access_token, create_activation_token,
                               create_refresh_token)
 from ..utils import random_email
@@ -52,3 +53,15 @@ def get_access_token_from_email(*,  db: Session, email: str = None, password: st
         db, email=email, password=password)
 
     return user_auth_headers_from_security(user_id=user.id, is_admin=user.is_admin)
+
+
+def get_access_token_first_admin(db: Session) -> Dict[str, str]:
+    """
+    Return FIRST_ADMIN access token
+    """
+
+    return get_access_token_from_email(db=db, email=s.FIRST_ADMIN)
+
+
+def no_header(db: Session):
+    return None
