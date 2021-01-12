@@ -13,6 +13,9 @@ from .value_schema import ValueReadSchema
 class FeatureCreateSchema(BaseSchema):
     name: str
 
+    class Config:
+        extra = 'forbid'
+
 
 @autocomplete
 class FeatureReadSchema(BaseSchema):
