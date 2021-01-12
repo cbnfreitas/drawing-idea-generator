@@ -13,6 +13,14 @@ CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseSchema)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseSchema)
 
 
+def commit_or_except_and_rollback(db):
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise e
+
+
 class _BaseService(Generic[BaseModelType]):
     """
     Database CRUD with Dict as input. It utilizes `conditions` for filtering.
@@ -39,15 +47,9 @@ class _BaseService(Generic[BaseModelType]):
         """
         db_obj = self.model(**obj_in)
         db.add(db_obj)
-        db.commit()
+        commit_or_except_and_rollback(db)
         db.refresh(db_obj)
 
-        # try:
-        #     db.commit()
-        #     db.refresh(db_obj)
-        # except Exception as e:
-        #     db.rollback()
-        #     raise e
         return db_obj
 
     def _read(
@@ -72,14 +74,7 @@ class _BaseService(Generic[BaseModelType]):
         """
         db_obj = db.query(self.model).filter(conditions)
         db_obj.update(update_data)
-        db.commit()
-
-        # try:
-        #     db.commit()
-        # except Exception as e:
-        #     db.rollback()
-        #     raise e
-
+        commit_or_except_and_rollback(db)
         return db_obj
 
     def _delete(
@@ -95,13 +90,7 @@ class _BaseService(Generic[BaseModelType]):
             return False
 
         db_obj.delete()
-        db.commit()
-
-        # try:
-        #     db.commit()
-        # except Exception as e:
-        #     db.rollback()
-        #     raise e
+        commit_or_except_and_rollback(db)
 
         return True
 
