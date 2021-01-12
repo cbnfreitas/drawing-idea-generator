@@ -9,8 +9,12 @@ from ..core.session import SessionLocal
 from ..main import app
 from .utils import random_email
 from .utils.auth_utils import get_access_token_from_email
+from .utils.dummy_route import dummy_route
 
 s.SEND_GRID_API_KEY = ""
+
+
+app.include_router(dummy_route, tags=["Dummies"])
 
 
 @pytest.fixture(scope="session")

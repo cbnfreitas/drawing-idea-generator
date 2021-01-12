@@ -3,10 +3,10 @@ from typing import Any, List
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..core import route_paths
-from ..routes.base_route import base_route
-from ..tests.utils.dummy_utils import (DummyCreateSchema, DummyReadSchema,
-                                       dummy_service)
+from ...core import route_paths
+from ...routes.base_route import base_route
+from ...tests.utils.dummy_utils import (DummyCreateSchema, DummyReadSchema,
+                                        dummy_service)
 
 dummy_route = APIRouter()
 
