@@ -1,7 +1,7 @@
 import pytest
 
 from ...core import route_paths
-from ..utils.dummy_utils import (create_random_dummy_dict,
+from ..utils.dummy_utils import (DummyReadSchema, create_random_dummy_dict,
                                  create_random_dummy_with_service)
 from .test_base_route import _TestBaseRoute
 

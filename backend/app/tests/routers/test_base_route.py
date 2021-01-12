@@ -33,8 +33,8 @@ class _TestBaseRoute:
             f"{resource_path}/{random_id}")
 
         assert is_success_code_response(read_entity_router_response)
-        assert (model_to_dict(random_entity_model) ==
-                read_entity_router_response.json())
+        assert is_dict_in_response(
+            model_to_dict(random_entity_model), read_entity_router_response)
 
     @see_also(base_route)
     def test_fail_to_read_one_entity_router_with_non_existing_id(
