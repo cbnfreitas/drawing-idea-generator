@@ -26,6 +26,9 @@ def is_model_in_response(model, response):
 def model_to_dict(obj):
     d = {}
     for column in obj.__table__.columns:
+        # if len(column.foreign_keys) > 0:
+        # Skip foreign keys
+        # continue
         if issubclass(type(column.type), DateTime):
             d[column.name] = datetime.isoformat(getattr(obj, column.name))
         else:

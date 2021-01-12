@@ -1,8 +1,9 @@
 import pytest
-from app.services.base_service import BaseService
 from sqlalchemy.orm import Session
 
-from ..utils import is_schema_in_model
+from ...routes.base_route import base_route
+from ...services.base_service import BaseService
+from ..utils import is_schema_in_model, see_also
 
 
 class _TestBaseService:

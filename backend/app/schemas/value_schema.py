@@ -10,6 +10,9 @@ class ValueCreateSchema(BaseSchema):
     value: str
     feature_id: int
 
+    class Config:
+        extra = 'forbid'
+
 
 @autocomplete
 class ValueReadSchema(BaseSchema):
