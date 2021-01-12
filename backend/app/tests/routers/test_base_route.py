@@ -5,7 +5,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from ...routes.base_route import base_route
-from ..utils import (is_dict_in_response, is_success_code_response,
+from ..utils import (is_dict_in_dict, is_dict_in_response,
+                     is_model_in_response, is_success_code_response,
                      model_to_dict, see_also)
 
 
@@ -33,8 +34,8 @@ class _TestBaseRoute:
             f"{resource_path}/{random_id}")
 
         assert is_success_code_response(read_entity_router_response)
-        assert is_dict_in_response(
-            model_to_dict(random_entity_model), read_entity_router_response)
+        assert is_model_in_response(
+            random_entity_model, read_entity_router_response)
 
     @see_also(base_route)
     def test_fail_to_read_one_entity_router_with_non_existing_id(
@@ -52,12 +53,14 @@ class _TestBaseRoute:
     ) -> None:
         random_entity_model = create_random_entity_with_service(db)
         read_entity_list_router_response = client.get(resource_path)
-
         assert is_success_code_response(read_entity_list_router_response)
-        assert (model_to_dict(random_entity_model)
-                in read_entity_list_router_response.json())
 
-    @see_also(base_route)
+        last_entity_on_response = read_entity_list_router_response.json()[-1]
+        random_entity_model_dict = model_to_dict(random_entity_model)
+        assert is_dict_in_dict(random_entity_model_dict,
+                               last_entity_on_response)
+
+    @ see_also(base_route)
     def test_update_entity_router(
             self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
     ) -> None:

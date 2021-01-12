@@ -19,6 +19,10 @@ def is_dict_in_response(dict, response):
     return is_dict_in_dict(dict, response.json())
 
 
+def is_model_in_response(model, response):
+    return is_dict_in_dict(model_to_dict(model), response.json())
+
+
 def model_to_dict(obj):
     d = {}
     for column in obj.__table__.columns:
