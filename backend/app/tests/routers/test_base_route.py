@@ -58,7 +58,7 @@ class _TestBaseRoute:
                 in read_entity_list_router_response.json())
 
     @see_also(base_route)
-    def test_update_dummy_router(
+    def test_update_entity_router(
             self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
     ) -> None:
         entity_model = create_random_entity_with_service(db)
@@ -72,31 +72,32 @@ class _TestBaseRoute:
         assert is_dict_in_response(
             new_entity_dict, updated_entity_router_response)
 
+    def test_fail_to_update_entity_router_with_non_existing_id(
+        self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
+    ) -> None:
+        wrong_entity_model_id = -1
+        new_entity_dict = create_random_entity_dict()
 
-# def test_fail_to_update_dummy_router_with_non_existing_id(db: Session, client: TestClient) -> None:
-#     wrong_dummy_model_id = -1
-#     new_dummy_dict = create_random_dummy_dict()
+        updated_entity_router_response = client.put(
+            f"{resource_path}/{wrong_entity_model_id}", json=new_entity_dict)
 
-#     updated_dummy_router_response = client.put(
-#         f"{route_paths.ROUTE_DUMMY}/{wrong_dummy_model_id}", json=new_dummy_dict)
+        assert updated_entity_router_response.status_code == status.HTTP_404_NOT_FOUND
 
-#     assert updated_dummy_router_response.status_code == status.HTTP_404_NOT_FOUND
+    def test_delete_entity_router(
+            self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
+    ) -> None:
+        entity_model = create_random_entity_with_service(db)
+        entity_id = entity_model.id
+        deleted_entity_router_response = client.delete(
+            f"{resource_path}/{entity_id}")
 
+        assert is_success_code_response(deleted_entity_router_response)
 
-# def test_delete_dummy_router(
-#         client: TestClient, db: Session
-# ) -> None:
-#     dummy_model = create_random_dummy_with_service(db)
-#     dummy_id = dummy_model.id
-#     deleted_dummy_router_response = client.delete(
-#         f"{route_paths.ROUTE_DUMMY}/{dummy_id}")
+    def test_fail_to_delete_dummy_router_with_non_existing_id(
+        self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
+    ) -> None:
+        wrong_entity_model_id = -1
+        deleted_entity_router_response = client.delete(
+            f"{resource_path}/{wrong_entity_model_id}")
 
-#     assert is_success_code_response(deleted_dummy_router_response)
-
-
-# def test_fail_to_delete_dummy_router_with_non_existing_id(db: Session, client: TestClient) -> None:
-#     wrong_dummy_model_id = -1
-#     deleted_dummy_router_response = client.delete(
-#         f"{route_paths.ROUTE_DUMMY}/{wrong_dummy_model_id}")
-
-#     assert deleted_dummy_router_response.status_code == status.HTTP_404_NOT_FOUND
+        assert deleted_entity_router_response.status_code == status.HTTP_404_NOT_FOUND
