@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from app.core import depends
+from fastapi import APIRouter, Depends
 
 from .auth_route import auth_route
 from .dummy_route import dummy_route
@@ -18,5 +19,7 @@ api_router.include_router(user_route, tags=["Users"])
 
 api_router.include_router(dummy_route, tags=["Dummies"])
 
-api_router.include_router(feature_route, tags=["Features & Values"])
-api_router.include_router(value_route, tags=["Features & Values"])
+api_router.include_router(feature_route, tags=["Features & Values"], dependencies=[
+                          Depends(depends.get_admin_from_access_token)])
+api_router.include_router(value_route, tags=["Features & Values"], dependencies=[
+                          Depends(depends.get_admin_from_access_token)])
