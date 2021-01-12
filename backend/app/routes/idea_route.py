@@ -13,7 +13,6 @@ from ..services import user_service
 idea_route = APIRouter()
 
 
-@idea_route.get(route_paths.ROUTE_IDEA, response_model=MsgResponseSchema)
 def generate_random_idea(
         db: Session = Depends(get_db)
 ) -> Any:
@@ -21,3 +20,7 @@ def generate_random_idea(
     Generate random idea.
     """
     return MsgResponseSchema(detail="Troll riding a bike")
+
+
+idea_route.get(route_paths.ROUTE_IDEA, response_model=MsgResponseSchema)(
+    generate_random_idea)
