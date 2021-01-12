@@ -19,3 +19,10 @@ class ValueReadSchema(BaseSchema):
 
     class Config:
         orm_mode = True
+
+class ValueReadSchemaNested(BaseSchema):
+    id: int
+    value: str
+
+    class Config:
+        orm_mode = True
