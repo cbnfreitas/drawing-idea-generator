@@ -16,7 +16,7 @@ class _TestBaseRoute:
     def test_create_entity_router(
             self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
     ) -> None:
-        random_entity_dict = create_random_entity_dict()
+        random_entity_dict = create_random_entity_dict(db)
         created_entity_router_response = client.post(
             resource_path, json=random_entity_dict)
 
@@ -66,7 +66,7 @@ class _TestBaseRoute:
     ) -> None:
         entity_model = create_random_entity_with_service(db)
         entity_id = entity_model.id
-        new_entity_dict = create_random_entity_dict()
+        new_entity_dict = create_random_entity_dict(db)
 
         updated_entity_router_response = client.put(
             f"{resource_path}/{entity_id}", json=new_entity_dict)
@@ -79,7 +79,7 @@ class _TestBaseRoute:
         self, client: TestClient, db: Session, resource_path, create_random_entity_dict, create_random_entity_with_service
     ) -> None:
         wrong_entity_model_id = -1
-        new_entity_dict = create_random_entity_dict()
+        new_entity_dict = create_random_entity_dict(db)
 
         updated_entity_router_response = client.put(
             f"{resource_path}/{wrong_entity_model_id}", json=new_entity_dict)

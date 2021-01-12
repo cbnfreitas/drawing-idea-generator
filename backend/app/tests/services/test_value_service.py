@@ -8,5 +8,5 @@ from .test_base_service import _TestBaseService
 
 @pytest.mark.parametrize("entity_service, create_random_entity_schema, create_random_entity_with_service",
                          [(feature_service, create_random_feature_schema, create_random_feature_with_service)])
-class TestFeatureService(_TestBaseService):
+class TestValueService(_TestBaseService):
     pass

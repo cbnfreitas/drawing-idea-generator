@@ -9,7 +9,7 @@ class _TestBaseService:
     def test_create_entity_service(
             self, db: Session, entity_service: BaseService, create_random_entity_schema, create_random_entity_with_service
     ) -> None:
-        random_entity_schema = create_random_entity_schema()
+        random_entity_schema = create_random_entity_schema(db)
         created_entity_model = entity_service.create(
             db, obj_in=random_entity_schema)
         assert is_schema_in_model(random_entity_schema, created_entity_model)
@@ -34,7 +34,7 @@ class _TestBaseService:
     ) -> None:
         created_entity_model = create_random_entity_with_service(db)
         created_entity_model_id = created_entity_model.id
-        new_random_entity_schema = create_random_entity_schema()
+        new_random_entity_schema = create_random_entity_schema(db)
 
         updated_entity_model = entity_service.update(
             db, id=created_entity_model_id, obj_in=new_random_entity_schema)

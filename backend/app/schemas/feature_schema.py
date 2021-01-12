@@ -4,7 +4,7 @@ from pydantic import BaseModel as BaseSchema
 
 from ..models import FeatureModel
 from .autocomplete import autocomplete
-from .value_schema import ValueReadSchemaNested
+from .value_schema import ValueReadSchema
 
 # from pydantic_sqlalchemy import sqlalchemy_to_pydantic
 
@@ -18,7 +18,7 @@ class FeatureCreateSchema(BaseSchema):
 class FeatureReadSchema(BaseSchema):
     id: int
     name: str
-    values: List[ValueReadSchemaNested]
+    values: List[ValueReadSchema]
 
     class Config:
         orm_mode = True
