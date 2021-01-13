@@ -41,11 +41,11 @@ def baseline(db: Session = Depends(get_db)) -> None:
         {"feature": "Raça", "values":  [
             "Humano", "Elfo", "Alien", "Anão", "Troll", "Dragão", "Gnomo", "Reptiliano"]},
         {"feature": "Identidade de gênero", "values": [
-            "Feminino", "Masculino", "Não binário"]},
+            "Feminino", "Masculino", "Não-binário"]},
         {"feature": "Ação", "values": [
             "Correndo", "Dormindo", "Estudando", "Voando", "Nadando", "Escalando", "Lutando Esgrima", "Fazendo faxina", "Assistindo TV"]},
         {"feature": "Como", "values": [
-            "Feliz", "Cansado", "Zangado", "Triste", "Ansioso"]},
+            "Feliz", "Cansado(a)", "Zangado(a)", "Triste", "Ansioso(a)"]},
     ]
 
     for initial_feature in initial_features_and_values:
