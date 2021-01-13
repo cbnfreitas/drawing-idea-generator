@@ -38,11 +38,14 @@ def baseline(db: Session = Depends(get_db)) -> None:
         user = user_service.create(db, obj_in=user_in)
 
     initial_features_and_values = [
-        {"feature": "Raça", "values":  ["Humano", "Elfo", "Alien"]},
+        {"feature": "Raça", "values":  [
+            "Humano", "Elfo", "Alien", "Anão", "Troll", "Dragão", "Gnomo", "Reptiliano"]},
         {"feature": "Identidade de gênero", "values": [
-            "Feminino", "Masculino", "Outros"]},
-        {"feature": "Ação", "values": ["Correndo", "Dormindo", "Estudando"]},
-        {"feature": "Como", "values": ["Feliz", "Cansado", "Zangado"]},
+            "Feminino", "Masculino", "Não binário"]},
+        {"feature": "Ação", "values": [
+            "Correndo", "Dormindo", "Estudando", "Voando", "Nadando", "Escalando", "Lutando Esgrima", "Fazendo faxina", "Assistindo TV"]},
+        {"feature": "Como", "values": [
+            "Feliz", "Cansado", "Zangado", "Triste", "Ansioso"]},
     ]
 
     for initial_feature in initial_features_and_values:

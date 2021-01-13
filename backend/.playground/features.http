@@ -28,7 +28,7 @@ username=admin@admin.com
 ##################################################
 
 ### Get all features
-GET /features?skip=2?limit=10 HTTP/1.1
+GET /features HTTP/1.1
 host: {{baseurl}}
 authorization: Bearer {{access_token}}
 

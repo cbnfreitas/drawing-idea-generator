@@ -3,14 +3,14 @@ from fastapi import APIRouter, Depends
 
 from .auth_route import auth_route
 from .feature_route import feature_route
-# from .idea_route import idea_route
+from .idea_route import idea_route
 from .user_me_route import user_me_route
 from .user_route import user_route
 from .value_route import value_route
 
 api_router = APIRouter()
 
-# api_router.include_router(idea_route, tags=["Ideas!"])
+api_router.include_router(idea_route, tags=["Ideas!"])
 
 api_router.include_router(auth_route, tags=["Auth"])
 api_router.include_router(user_me_route, tags=["Users/Me"])

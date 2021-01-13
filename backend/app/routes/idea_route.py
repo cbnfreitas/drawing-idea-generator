@@ -1,26 +1,30 @@
-# from typing import Any, Dict
+from typing import Any, Dict
 
-# from fastapi import APIRouter, Depends
-# from sqlalchemy.orm import Session
+from app.services import feature_service
+from app.tests.utils import random_integer
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-# from ..core import route_paths
-# from ..core.depends import get_db, get_user_from_access_token
-# from ..routes.user_route import update_user_by_helper
-# from ..schemas.msg_schema import MsgResponseSchema
-# from ..schemas.user_schema import UserReadSchema, UserUpdateSchema
-# from ..services import user_service
+from ..core import route_paths
+from ..core.depends import get_db
+from ..schemas.msg_schema import MsgResponseSchema
 
-# idea_route = APIRouter()
-
-
-# def generate_random_idea(
-#         db: Session = Depends(get_db)
-# ) -> Any:
-#     """
-#     Generate random idea.
-#     """
-#     return MsgResponseSchema(detail="Troll riding a bike")
+idea_route = APIRouter()
 
 
-# idea_route.get(route_paths.ROUTE_IDEA, response_model=MsgResponseSchema)(
-#     generate_random_idea)
+@idea_route.get(route_paths.ROUTE_IDEA, response_model=MsgResponseSchema)
+def generate_random_idea(
+        db: Session = Depends(get_db)
+) -> Any:
+    """
+    Generate random idea.
+    """
+
+    features = feature_service.read_many(db)
+    idea = ""
+    for feature in features:
+        random_value_index = random_integer(min=0, max=len(feature.values) - 1)
+        random_value = feature.values[random_value_index].value
+        idea = f"{idea}{random_value} "
+
+    return MsgResponseSchema(detail=idea.strip())
