@@ -76,7 +76,7 @@ class BaseUserService(BaseService[UserModel, user_create_schemas, UserUpdateSche
         if auth_change:
             update_data["last_auth_change"] = datetime.utcnow()
 
-        return self._update(db, conditions=self.model.id == id, update_data=update_data).first()
+        return self._update(db, criteria=(self.model.id == id), update_data=update_data).first()
 
     def authenticate(
             self,

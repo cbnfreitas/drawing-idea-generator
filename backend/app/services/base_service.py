@@ -23,7 +23,7 @@ def commit_or_except_and_rollback(db):
 
 class _BaseService(Generic[BaseModelType]):
     """
-    Database CRUD with Dict as input. It utilizes `conditions` for filtering.
+    Database CRUD with Dict as input. It utilizes `criteria` for filtering.
 
     **Parameters**
     * `BaseModelType`: A SQLAlchemy BaseModel
@@ -55,24 +55,24 @@ class _BaseService(Generic[BaseModelType]):
     def _read(
             self,
             db: Session,
-            conditions=True
+            criteria=True
     ) -> Any:
         """
-        Return a `ModelType` matching `conditions` from the database.
+        Return a `ModelType` matching `criteria` from the database.
         """
-        return db.query(self.model).filter(conditions)
+        return db.query(self.model).filter(criteria)
 
     def _update(
             self,
             db: Session,
-            conditions=False,
+            criteria=False,
             *,
             update_data: Dict[str, Any]
     ) -> Any:
         """
-        Update `db_obj` with `update_data` based on `conditions` in the database and
+        Update `db_obj` with `update_data` based on `criteria` in the database and
         """
-        db_obj = db.query(self.model).filter(conditions)
+        db_obj = db.query(self.model).filter(criteria)
         db_obj.update(update_data)
         commit_or_except_and_rollback(db)
         return db_obj
@@ -80,12 +80,12 @@ class _BaseService(Generic[BaseModelType]):
     def _delete(
             self,
             db: Session,
-            conditions=True
+            criteria=True
     ) -> bool:
         """
         Delete a `ModelType` by `id` on the database.
         """
-        db_obj = db.query(self.model).filter(conditions)
+        db_obj = db.query(self.model).filter(criteria)
         if db_obj.count() == 0:
             return False
 
@@ -140,12 +140,13 @@ class BaseService(_BaseService, Generic[BaseModelType, CreateSchemaType, UpdateS
             db: Session,
             *,
             skip: int = None,
-            limit: int = None
+            limit: int = None,
+            criteria=True
     ) -> List[BaseModelType]:
         """
         Return a list of `ModelType`s from the database, including pagination if necessary.
         """
-        return self._read(db).offset(skip).limit(limit).all()
+        return self._read(db, criteria=criteria).offset(skip).limit(limit).all()
 
     def update(
             self,
@@ -159,7 +160,7 @@ class BaseService(_BaseService, Generic[BaseModelType, CreateSchemaType, UpdateS
         return the corresponding `ModelType`.
         """
         obj_in_data = schema_or_dict_to_dict(obj_in)
-        return self._update(db, conditions=self.model_id == id, update_data=obj_in_data).first()
+        return self._update(db, criteria=(self.model_id == id), update_data=obj_in_data).first()
 
     def delete(
             self,
