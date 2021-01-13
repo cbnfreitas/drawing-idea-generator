@@ -31,3 +31,9 @@ def baseline(db: Session = Depends(get_db)) -> None:
             is_active=True,
         )
         user = user_service.create(db, obj_in=user_in)
+
+
+# Raça: Humano, Elfo, Alien
+# Identidade de gênero: Masculino, Feminino, Outros
+# Ação: Correndo, comendo, estudando
+# Onde: Feliz, com medo, cansado

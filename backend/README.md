@@ -5,8 +5,15 @@
 - Characteristics
 - Values
 
+Raça: Humano, Elfo, Alien
+Identidade de gênero: Masculino, Feminino, Outros
+Ação: Correndo, comendo, estudando
+Onde: Feliz, com medo, cansado
 
 ## TODO
+
+* Enhance service to allow filter by other conditions
+* Populate baseline with basic features/values
 
 * Automatic import all files under `services\__init__`, `models\__ini__` and `routes\__ini__`
 * Automatic test automation creation. Check whether schema and model are compatible! (https://docs.pytest.org/en/stable/parametrize.html)
