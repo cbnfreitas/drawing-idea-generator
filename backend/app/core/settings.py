@@ -49,7 +49,6 @@ class Settings(BaseSettings):
 
     EMAIL_TEMPLATES_DIR = "templates"
     EMAILS_FROM_EMAIL = "naoresponder@alphabrand.com.br"
-    # SEND_GRID_API_KEY: str = "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"
     SEND_GRID_API_KEY: str = ""
 
     # @validator("EMAILS_FROM_NAME")
